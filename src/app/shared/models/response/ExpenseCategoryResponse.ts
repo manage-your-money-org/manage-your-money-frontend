@@ -1,4 +1,4 @@
-interface ExpenseCategoryResponse {
+export interface ExpenseCategoryResponse {
 
   categoryName: string,
   categoryDescription: string,

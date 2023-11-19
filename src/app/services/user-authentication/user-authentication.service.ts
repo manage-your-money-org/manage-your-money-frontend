@@ -84,6 +84,21 @@ export class UserAuthenticationService {
     )
   }
 
+  verifyEmailOtp(otp: string) {
+
+    let params = new HttpParams().set("otp", otp);
+
+    return this.httpClient.post<MymApiResponse<TokenResponse>>(
+      `${this.userBaseUrl}/update/email/verify/otp`,
+      null,
+      {
+        observe: "response",
+        headers: MymUtil.getHeaders(),
+        params: params
+      }
+    )
+  }
+
   updateUserBasicDetails(name: string) {
 
     let updateUserBasicDetailRequest: {
@@ -98,21 +113,6 @@ export class UserAuthenticationService {
       {
         observe: "response",
         headers: MymUtil.getHeaders(),
-      }
-    )
-  }
-
-  verifyEmailOtp(otp: string) {
-
-    let params = new HttpParams().set("otp", otp);
-
-    return this.httpClient.post<MymApiResponse<TokenResponse>>(
-      `${this.userBaseUrl}/update/email/verify/otp`,
-      null,
-      {
-        observe: "response",
-        headers: MymUtil.getHeaders(),
-        params: params
       }
     )
   }

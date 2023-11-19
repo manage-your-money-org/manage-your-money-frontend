@@ -3,6 +3,9 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {ExpenseCategoryRequest} from "../../shared/models/request/ExpenseCategoryRequest";
 import {MymUtil} from "../../shared/util/MymUtil";
+import {MymApiResponse} from "../../shared/models/response/MymApiResponse";
+import {ExpenseCategoryResponse} from "../../shared/models/response/ExpenseCategoryResponse";
+import {PageableResponse} from "../../shared/models/response/PageableResponse";
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +19,7 @@ export class ExpenseCategoryService {
 
   createNewExpenseCategory(expenseCategoryRequest: ExpenseCategoryRequest) {
 
-    return this.httpClient.post(`${this.baseUrl}/new/create`,
+    return this.httpClient.post<MymApiResponse<ExpenseCategoryResponse>>(`${this.baseUrl}/new/create`,
       expenseCategoryRequest, {
         observe: "response", withCredentials: true, headers: MymUtil.getHeaders()
       });
@@ -24,7 +27,7 @@ export class ExpenseCategoryService {
 
   updateExpenseCategory(expenseCategoryRequest: ExpenseCategoryRequest) {
 
-    return this.httpClient.put(
+    return this.httpClient.put<MymApiResponse<ExpenseCategoryResponse>>(
       `${this.baseUrl}/update`,
       expenseCategoryRequest,
       {observe: "response", withCredentials: true, headers: MymUtil.getHeaders()}
@@ -35,7 +38,7 @@ export class ExpenseCategoryService {
 
     let params = new HttpParams().set("key", key);
 
-    return this.httpClient.get(`${this.baseUrl}/key`, {
+    return this.httpClient.get<MymApiResponse<ExpenseCategoryResponse>>(`${this.baseUrl}/key`, {
       observe: "response",
       params: params,
       withCredentials: true,
@@ -43,6 +46,42 @@ export class ExpenseCategoryService {
     });
   }
 
+  //get all categories
+  getAllCategories(page: number, size: number, sort: string[]) {
 
+    let params = new HttpParams()
+      .append("page", page)
+      .append("size", size);
 
+    sort.forEach((element) => {
+
+      params.append("sort", element)
+    });
+
+    return this.httpClient.get<MymApiResponse<PageableResponse<ExpenseCategoryResponse>>>(
+      `${this.baseUrl}`,
+      {
+        observe: "response",
+        headers: MymUtil.getHeaders(),
+        withCredentials: true,
+        params: params
+      }
+    )
+  }
+
+  // delete category by key
+  deleteExpenseCategoryByKey(key: string) {
+
+    let params = new HttpParams().set("key", key);
+
+    return this.httpClient.delete(
+      `${this.baseUrl}/key`,
+      {
+        observe: "response",
+        withCredentials: true,
+        headers: MymUtil.getHeaders(),
+        params: params
+      }
+    )
+  }
 }
