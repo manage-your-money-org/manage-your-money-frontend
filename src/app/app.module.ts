@@ -7,12 +7,16 @@ import {FormsModule} from "@angular/forms";
 import { LoginComponent } from './login/login.component';
 import { HttpClientModule } from "@angular/common/http";
 import { ExpenseCategoryComponent } from './expense-category/expense-category/expense-category.component';
+import { RegisterUserComponent } from './register-user/register-user.component';
+import { UserComponent } from './user/user.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    ExpenseCategoryComponent
+    ExpenseCategoryComponent,
+    RegisterUserComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,

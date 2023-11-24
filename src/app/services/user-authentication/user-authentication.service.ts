@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
-import {Observable} from "rxjs";
 import {MymUtil} from "../../shared/util/MymUtil";
 import {UserRequest} from "../../shared/models/request/UserRequest";
 import {LoginRequest} from "../../shared/models/request/LoginRequest";
@@ -23,11 +22,12 @@ export class UserAuthenticationService {
 
 
   // register or create user
-  registerUser(userRequest: UserRequest): Observable<any> {
+  registerUser(userRequest: UserRequest) {
 
     let url: string = `${this.userBaseUrl}/create`;
 
     console.log("Create User post request")
+
     return this.httpClient.post<MymApiResponse<UserResponse>>(url, userRequest, {
       observe: "response",
       headers: MymUtil.getHeaders()
