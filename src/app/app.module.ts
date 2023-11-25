@@ -9,6 +9,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { ExpenseCategoryComponent } from './expense-category/expense-category/expense-category.component';
 import { RegisterUserComponent } from './register-user/register-user.component';
 import { UserComponent } from './user/user.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { UserComponent } from './user/user.component';
     LoginComponent,
     ExpenseCategoryComponent,
     RegisterUserComponent,
-    UserComponent
+    UserComponent,
+    ForgotPasswordComponent
   ],
   imports: [
     BrowserModule,

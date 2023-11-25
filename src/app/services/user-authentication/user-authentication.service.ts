@@ -8,6 +8,8 @@ import {MymApiResponse} from "../../shared/models/response/MymApiResponse";
 import {UserResponse} from "../../shared/models/response/UserResponse";
 import {TokenResponse} from "../../shared/models/response/TokenResponse";
 import {PasswordResetRequest} from "../../shared/models/request/PasswordResetRequest";
+import {response} from "express";
+import {map} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +32,8 @@ export class UserAuthenticationService {
 
     return this.httpClient.post<MymApiResponse<UserResponse>>(url, userRequest, {
       observe: "response",
-      headers: MymUtil.getHeaders()
+      headers: MymUtil.getHeaders(),
+      withCredentials: true
     });
   }
 
@@ -40,7 +43,7 @@ export class UserAuthenticationService {
     body.append("username", loginRequest.emailId);
     body.append("password", loginRequest.password);
 
-    return this.httpClient.post<TokenResponse>(this.loginUrl, body, {observe: "response"});
+    return this.httpClient.post<TokenResponse>(this.loginUrl, body, {observe: "response", withCredentials: true});
   }
 
   forgotPassword(email: string) {
@@ -49,7 +52,7 @@ export class UserAuthenticationService {
 
     return this.httpClient.post<MymApiResponse<string>>(
       `${this.userBaseUrl}/password/forgot`,
-      {observe: "response", headers: MymUtil.getHeaders(), params: params}
+      {observe: "response", headers: MymUtil.getHeaders(), withCredentials: true, params: params},
     );
   }
 
@@ -80,6 +83,7 @@ export class UserAuthenticationService {
       {
         observe: "response",
         headers: MymUtil.getHeaders(),
+        withCredentials: true
       }
     )
   }
@@ -94,7 +98,8 @@ export class UserAuthenticationService {
       {
         observe: "response",
         headers: MymUtil.getHeaders(),
-        params: params
+        params: params,
+        withCredentials: true
       }
     )
   }
@@ -113,6 +118,7 @@ export class UserAuthenticationService {
       {
         observe: "response",
         headers: MymUtil.getHeaders(),
+        withCredentials: true
       }
     )
   }
@@ -125,6 +131,4 @@ export class UserAuthenticationService {
       withCredentials: true
     })
   }
-
-
 }

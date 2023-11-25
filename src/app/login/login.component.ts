@@ -37,9 +37,8 @@ export class LoginComponent implements OnInit {
         next: (response: HttpResponse<any>) => {
 
           console.log(response.status);
-          // console.log(response.body);
-
-          return response.body;
+          console.log(response.body);
+          this.router.navigate(['/expense-categories'])
         },
         error: (error) => {
 
