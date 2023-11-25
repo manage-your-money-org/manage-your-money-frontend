@@ -1,33 +1,38 @@
-<div class="container">
+<div class="center border-padding">
 
-  <h1>Login</h1>
-  <br>
+  <div class="container">
 
-  <div class="textholder">
-    <input type="text" placeholder="email-id" name="email" [(ngModel)]="emailId" value="{{emailId}}">
+    <h1>Login</h1>
+    <br>
+
+    <div class="textholder">
+      <input type="text" placeholder="email-id" name="email" [(ngModel)]="emailId" value="{{emailId}}">
+      <div *ngIf="!isEmailValid" style="color: orangered;">Please enter a valid email address</div>
+    </div>
+    <br>
+
+    <div class="textholder">
+      <input type="password" placeholder="password" name="password" [(ngModel)]="password" value="{{password}}">
+      <div *ngIf="!isPasswordValid" style="color: orangered;">Please enter a valid password</div>
+    </div>
+
+    <br>
+    <button (click)="handleLoginOnClickSignInBtn()" class="btn btn-primary">Login</button>
+
+    <br><br>
+    <a href="/forgot-password">Forgot password</a>
+
+    <br><br>
+    <div class="alert alert-warning" *ngIf="isLoginInvalid">{{errorMessage}}</div>
+
+    <hr>
+
+    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center">
+      <p>Or</p>
+      <button (click)="registerUser()" class="btn">Register</button>
+    </div>
+
+
   </div>
-
-  <br>
-
-  <div class="textholder">
-
-    <input type="password" placeholder="password" name="password" [(ngModel)]="password" value="{{password}}">
-  </div>
-
-  <br>
-
-  <a href="https://www.google.com">Forgot password</a>
-
-  <br><br>
-
-  <button (click)="handleLoginOnClickSignInBtn()" class="btn btn-primary">Login</button>
-
-  <div class="alert alert-warning" *ngIf="isInvalidPassword">{{errorMessage}}</div>
-
-  <hr>
-
-  <p>Or</p>
-
-  <button (click)="registerUser()" class="btn">Register</button>
 
 </div>

@@ -9,7 +9,6 @@ import {UserResponse} from "../../shared/models/response/UserResponse";
 import {TokenResponse} from "../../shared/models/response/TokenResponse";
 import {PasswordResetRequest} from "../../shared/models/request/PasswordResetRequest";
 import {response} from "express";
-import {map} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -43,7 +42,10 @@ export class UserAuthenticationService {
     body.append("username", loginRequest.emailId);
     body.append("password", loginRequest.password);
 
-    return this.httpClient.post<TokenResponse>(this.loginUrl, body, {observe: "response", withCredentials: true});
+    return this.httpClient.post<MymApiResponse<TokenResponse>>(this.loginUrl, body, {
+      observe: "response",
+      withCredentials: true
+    });
   }
 
   forgotPassword(email: string) {
@@ -52,6 +54,7 @@ export class UserAuthenticationService {
 
     return this.httpClient.post<MymApiResponse<string>>(
       `${this.userBaseUrl}/password/forgot`,
+      null,
       {observe: "response", headers: MymUtil.getHeaders(), withCredentials: true, params: params},
     );
   }
@@ -130,5 +133,13 @@ export class UserAuthenticationService {
       headers: MymUtil.getHeaders(),
       withCredentials: true
     })
+  }
+
+  logoutUser() {
+
+    return this.httpClient.post<MymApiResponse<String>>(`${this.userBaseUrl}/logout`, null, {
+      observe: "response",
+      withCredentials: true
+    });
   }
 }

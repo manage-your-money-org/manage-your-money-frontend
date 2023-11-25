@@ -1,15 +1,16 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {BrowserModule, provideClientHydration} from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
 import {FormsModule} from "@angular/forms";
-import { LoginComponent } from './login/login.component';
-import { HttpClientModule } from "@angular/common/http";
-import { ExpenseCategoryComponent } from './expense-category/expense-category/expense-category.component';
-import { RegisterUserComponent } from './register-user/register-user.component';
-import { UserComponent } from './user/user.component';
-import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import {LoginComponent} from './login/login.component';
+import {HttpClientModule} from "@angular/common/http";
+import {ExpenseCategoryComponent} from './expense-category/expense-category.component';
+import {RegisterUserComponent} from './register-user/register-user.component';
+import {UserComponent} from './user/user.component';
+import {ForgotPasswordComponent} from './forgot-password/forgot-password.component';
+import {AppHeaderComponent} from './app-header/app-header.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
     ExpenseCategoryComponent,
     RegisterUserComponent,
     UserComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    AppHeaderComponent
   ],
   imports: [
     BrowserModule,

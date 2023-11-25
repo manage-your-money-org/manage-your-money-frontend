@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ExpenseCategoryComponent } from './expense-category.component';
+import {ExpenseCategoryComponent} from './expense-category.component';
 
 describe('ExpenseCategoryComponent', () => {
   let component: ExpenseCategoryComponent;
@@ -11,7 +11,7 @@ describe('ExpenseCategoryComponent', () => {
       declarations: [ExpenseCategoryComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(ExpenseCategoryComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

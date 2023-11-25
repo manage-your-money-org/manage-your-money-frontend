@@ -3,6 +3,7 @@ import {Router} from "@angular/router";
 import {UserAuthenticationService} from "../services/user-authentication/user-authentication.service";
 import {HttpResponse} from "@angular/common/http";
 import {LoginRequest} from "../shared/models/request/LoginRequest";
+import {MymUtil} from '../shared/util/MymUtil';
 
 @Component({
   selector: 'app-login',
@@ -12,9 +13,11 @@ import {LoginRequest} from "../shared/models/request/LoginRequest";
 export class LoginComponent implements OnInit {
 
   emailId: string = '';
+  isEmailValid = true;
   password: string = '';
-  errorMessage: string = "Invalid credentials"
-  isInvalidPassword: boolean = false;
+  isPasswordValid = true;
+  errorMessage: string = ""
+  isLoginInvalid: boolean = false;
 
   constructor(private router: Router, private authenticationService: UserAuthenticationService) {
   }
@@ -25,27 +28,63 @@ export class LoginComponent implements OnInit {
 
   handleLoginOnClickSignInBtn() {
 
-    let loginRequest: LoginRequest = {
-      emailId: this.emailId,
-      password: this.password
+
+    if (!MymUtil.isEmailIdValid(this.emailId.trim())) {
+
+      this.isEmailValid = false;
+    } else {
+      this.isEmailValid = true;
     }
 
-    console.log("Clicked handle login button")
+    if (!MymUtil.isStringValid(this.password.trim())) {
 
-    this.authenticationService.loginUser(loginRequest).subscribe({
+      this.isPasswordValid = false;
+    } else {
+      this.isPasswordValid = true;
+    }
 
-        next: (response: HttpResponse<any>) => {
+    if (this.isEmailValid && this.isPasswordValid) {
 
-          console.log(response.status);
-          console.log(response.body);
-          this.router.navigate(['/expense-categories'])
-        },
-        error: (error) => {
-
-          console.log("Error while registering user: " + error + ", status code: " + error.status)
-        }
+      let loginRequest: LoginRequest = {
+        emailId: this.emailId,
+        password: this.password
       }
-    )
+
+      console.log("Clicked handle login button")
+
+      this.authenticationService.loginUser(loginRequest).subscribe({
+
+          next: (response: HttpResponse<any>) => {
+
+            console.log(response.status);
+            console.log(response.body.error);
+
+            if (response.status == 200) {
+
+              this.isLoginInvalid = false;
+              this.router.navigate(['/expense-categories'])
+            } else {
+              this.isLoginInvalid = false;
+              this.errorMessage = "Something went wrong!!"
+            }
+
+          },
+          error: (error) => {
+
+            this.isLoginInvalid = true;
+
+            this.errorMessage = "Error while Login: " + error.message;
+
+            if (error.status == 403) {
+
+              this.errorMessage = "Username or password not valid"
+            }
+
+            console.log("Error while logging user: " + error + ", status code: " + error.status)
+          }
+        }
+      )
+    }
   }
 
   registerUser() {

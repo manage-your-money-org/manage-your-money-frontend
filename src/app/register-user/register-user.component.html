@@ -1,52 +1,69 @@
-<div class="container">
+<div class="center border-padding">
 
-  <form #registerForm="ngForm" (ngSubmit)="registerUser(registerForm)">
+  <div class="container">
 
+    <h1>Register</h1>
     <br>
-    <div class="input-container">
-      <input type="text" name="name" id="name" placeholder="Name" [(ngModel)]="name">
+
+    <form #registerForm="ngForm" (ngSubmit)="registerUser(registerForm)">
+
+      <br>
+      <div class="input-container">
+        <input type="text" name="name" id="name" placeholder="Name" [(ngModel)]="name">
+      </div>
+      <br>
+
+      <div class="input-container">
+        <input type="text" name="emailId" id="emailId" placeholder="Email-Id" [(ngModel)]="emailId">
+      </div>
+
+      <br>
+
+      <div class="input-container">
+        <input type="password" name="password" id="password" placeholder="Password" [(ngModel)]="password">
+      </div>
+
+      <br>
+
+      <div class="input-container">
+
+        <input type="password" name="confirm-password" id="confirm-password" placeholder="Confirm Password"
+               [(ngModel)]="confirmPassword">
+      </div>
+
+      <br>
+
+      <div class="center-button">
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+
+    </form>
+
+    <br><br>
+
+    <div class="alert alert-success" *ngIf="isRegistrationSuccessful">
+
+      <p name="registration-success">{{successMessage}}</p>
+
     </div>
-    <br>
 
-    <div class="input-container">
-      <input type="text" name="emailId" id="emailId" placeholder="Email-Id" [(ngModel)]="emailId">
+    <button *ngIf="isRegistrationSuccessful" type="button" (click)="navigateToLoginPage()" class="btn btn-success">
+      Login
+    </button>
+
+
+    <div class="error alert alert-warning" *ngIf="!isFormValid">
+
+      <p name="invalid-form">{{invalidFormMessage}}</p>
+
     </div>
-
-    <br>
-
-    <div class="input-container">
-      <input type="password" name="password" id="password" placeholder="Password" [(ngModel)]="password">
-    </div>
-
-    <br>
-
-    <div class="input-container">
-
-      <input type="password" name="confirm-password" id="confirm-password" placeholder="Confirm Password"
-             [(ngModel)]="confirmPassword">
-    </div>
-
-    <br>
-
-    <button type="submit" class="btn">Submit</button>
-
-  </form>
-
-  <br><br>
-
-  <div class="alert alert-success" *ngIf="isRegistrationSuccessful">
-
-    <p name="registration-success">{{successMessage}}</p>
-
   </div>
 
-  <button *ngIf="isRegistrationSuccessful" type="button" (click)="navigateToLoginPage()" class="btn btn-success">Login</button>
+  <hr>
 
-
-  <div class="error alert alert-warning" *ngIf="!isFormValid">
-
-    <p name="invalid-form">{{invalidFormMessage}}</p>
-
+  <div style="display: flex; justify-content: center">
+    <button class="btn" style="margin-right: 3px"><a href="/login">Login</a></button>
   </div>
+
 
 </div>
