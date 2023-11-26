@@ -1,1 +1,49 @@
-expense category
+<div style="margin-left: 10%; margin-right: 10%">
+
+  <br>
+  <br>
+
+  <h1>Expense Categories</h1>
+
+  <br><br>
+
+  <div class="center-div">
+
+    <div class="search-container">
+
+      <form (ngSubmit)="searchCategory()" class="search_form">
+
+        <input type="text" name="category_search" id="category_search" placeholder="Search categories">
+        <button class="search_button" type="submit">Search</button>
+      </form>
+    </div>
+
+  </div>
+
+  <br><br>
+
+  <div class="search-results"
+       infiniteScroll
+       [infiniteScrollDistance]="2"
+       infiniteScrollThrottle="500"
+       (scrolled)="onScroll()"
+       [scrollWindow]="false"
+  >
+    <div class="expense-category-container">
+
+      <div class="category-item" *ngFor="let item of expenseCategoryList">
+
+        <img ng-src="{{item.imageUrl}}}" alt="Description"/>
+        <span>{{item.categoryName}}</span>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <br>
+
+  <hr>
+
+</div>

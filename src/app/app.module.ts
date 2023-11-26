@@ -11,6 +11,8 @@ import {RegisterUserComponent} from './register-user/register-user.component';
 import {UserComponent} from './user/user.component';
 import {ForgotPasswordComponent} from './forgot-password/forgot-password.component';
 import {AppHeaderComponent} from './app-header/app-header.component';
+import {InfiniteScrollModule} from "ngx-infinite-scroll";
+import {NgOptimizedImage} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import {AppHeaderComponent} from './app-header/app-header.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    InfiniteScrollModule,
+    NgOptimizedImage
   ],
   providers: [
     provideClientHydration()
