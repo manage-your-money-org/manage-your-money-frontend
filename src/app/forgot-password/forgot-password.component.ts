@@ -29,6 +29,9 @@ export class ForgotPasswordComponent {
 
     if (this.isEmailIdValid) {
 
+      this.isResponseValid = true;
+      this.errorResponse = '';
+
       this.userAuthenticationService.forgotPassword(this.emailId).subscribe({
 
         next: (response: HttpResponse<MymApiResponse<string>>) => {
@@ -49,6 +52,10 @@ export class ForgotPasswordComponent {
           this.errorResponse = (error.error.message === null || error.error.message === '') ? error.message : error.error.message;
         }
       })
+    } else {
+
+      this.isResponseValid = false;
+      this.errorResponse = 'Please enter a valid email id'
     }
 
   }

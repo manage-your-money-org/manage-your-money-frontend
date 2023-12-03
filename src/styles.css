@@ -148,7 +148,12 @@ body {
 
 .form-error {
   font-size: 12px;
-  color: red;
+  color: orangered;
+}
+
+.form-success {
+  font-size: 12px;
+  color: darkgreen;
 }
 
 
