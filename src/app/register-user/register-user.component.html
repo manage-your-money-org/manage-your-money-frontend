@@ -1,69 +1,88 @@
-<div class="center">
+<div style="width: 100%; height: 100%; display: flex">
 
-  <div class="container">
+  <div class="login-register-smaller-side-container">
 
-    <h1>Register</h1>
-    <br>
+    <div class="login-signup-section-container">
 
-    <form #registerForm="ngForm" (ngSubmit)="registerUser(registerForm)">
-
-      <br>
-      <div class="input-container">
-        <input type="text" name="name" id="name" placeholder="Name" [(ngModel)]="name">
-      </div>
-      <br>
-
-      <div class="input-container">
-        <input type="text" name="emailId" id="emailId" placeholder="Email-Id" [(ngModel)]="emailId">
+      <div class="login-signup-header">
+        <span>Welcome!</span>
       </div>
 
-      <br>
-
-      <div class="input-container">
-        <input type="password" name="password" id="password" placeholder="Password" [(ngModel)]="password">
+      <div class="login-signup-content">
+        <span>Start from where you left, please login</span>
       </div>
 
-      <br>
+      <div (click)="navigateToLoginPage()" class="div-button-stroke">
 
-      <div class="input-container">
+        <span>SIGN IN</span>
 
-        <input type="password" name="confirm-password" id="confirm-password" placeholder="Confirm Password"
-               [(ngModel)]="confirmPassword">
       </div>
-
-      <br>
-
-      <div class="center-div">
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </div>
-
-    </form>
-
-    <br><br>
-
-    <div class="alert alert-success" *ngIf="isRegistrationSuccessful">
-
-      <p name="registration-success">{{successMessage}}</p>
 
     </div>
 
-    <button *ngIf="isRegistrationSuccessful" type="button" (click)="navigateToLoginPage()" class="btn btn-success">
-      Login
-    </button>
+  </div>
 
+  <div style="color: #0687FF; width: 70%; position: relative;height: 100%;">
 
-    <div class="error alert alert-warning" *ngIf="!isFormValid">
+    <div class="login-signup-container center">
 
-      <p name="invalid-form">{{invalidFormMessage}}</p>
+      <div class="signIn-signUp-header">
+        <span>Create  Account</span>
+      </div>
+
+      <div class="login-signup-form-container">
+
+        <mat-form-field appearance="outline" style="width: 80%">
+          <mat-label>Name</mat-label>
+          <input matInput placeholder="Enter your name" [(ngModel)]="name" required>
+          <mat-icon matSuffix>person</mat-icon>
+        </mat-form-field>
+
+        <br>
+
+        <mat-form-field appearance="outline" style="width: 80%">
+          <mat-label>Email-Id</mat-label>
+          <input matInput placeholder="Enter email-id" [(ngModel)]="emailId" required>
+          <mat-icon matSuffix>email</mat-icon>
+        </mat-form-field>
+
+        <br>
+        <mat-form-field appearance="outline" style="width: 80%">
+          <mat-label>Password</mat-label>
+          <input matInput [type]="hide ? 'password' : 'text'" placeholder="Enter password" [(ngModel)]="password"
+                 required>
+          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                  [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <br>
+
+        <mat-form-field appearance="outline" style="width: 80%">
+          <mat-label>Confirm Password</mat-label>
+          <input matInput [type]="hide ? 'password' : 'text'" placeholder="Confirm password"
+                 [(ngModel)]="confirmPassword" required>
+          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                  [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <span *ngIf="!isFormValid" class="form-error">{{invalidFormMessage}}</span>
+
+        <mat-card (click)="registerUser()" class="singIn-signUp-button">
+
+          <div>
+            <span>SIGN UP</span>
+          </div>
+
+        </mat-card>
+
+      </div>
 
     </div>
+
   </div>
-
-  <hr>
-
-  <div style="display: flex; justify-content: center">
-    <button class="btn" style="margin-right: 3px"><a href="/login">Login</a></button>
-  </div>
-
 
 </div>
