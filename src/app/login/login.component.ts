@@ -19,6 +19,8 @@ export class LoginComponent implements OnInit {
   errorMessage: string = ""
   isLoginInvalid: boolean = false;
 
+  hide = true;
+
   constructor(private router: Router, private authenticationService: UserAuthenticationService) {
   }
 
@@ -87,7 +89,11 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  registerUser() {
+  navigateToForgotPassword() {
+    this.router.navigate(['/forgot-password']);
+  }
+
+  navigateToRegisterUser() {
 
     this.router.navigate(['/register']);
   }

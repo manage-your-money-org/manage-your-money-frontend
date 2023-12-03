@@ -1,49 +1,29 @@
-<div style="margin-left: 10%; margin-right: 10%">
+<div class="expense-category-header">
 
-  <br>
-  <br>
+  <div class="component-header-title">
+    <h2>Expense category</h2>
+  </div>
 
-  <h1>Expense Categories</h1>
+  <div class="expense-category-menus">
 
-  <br><br>
+    <div class="search-menu-container" style="cursor: text">
 
-  <div class="center-div">
+      <i class="material-icons" style="margin-right: 5px; margin-top: 1px">search</i>
+      <span class="search-span">Search</span>
+    </div>
 
-    <div class="search-container">
+    <div class="sort-menu-container" style="cursor: pointer">
 
-      <form (ngSubmit)="searchCategory()" class="search_form">
+      <i class="material-icons" style="margin-right: 5px; margin-top: 1px">sort</i>
+      <span class="sort-span">Sort</span>
+    </div>
 
-        <input type="text" name="category_search" id="category_search" placeholder="Search categories">
-        <button class="search_button" type="submit">Search</button>
-      </form>
+    <div class="graph-menu-container" style="cursor: pointer">
+
+      <i class="fa fa-pie-chart" style="font-size:24px; margin-right: 5px; margin-top: 1px"></i>
+      <span class="graph-span">Graph</span>
     </div>
 
   </div>
-
-  <br><br>
-
-  <div class="search-results"
-       infiniteScroll
-       [infiniteScrollDistance]="2"
-       infiniteScrollThrottle="500"
-       (scrolled)="onScroll()"
-       [scrollWindow]="false"
-  >
-    <div class="expense-category-container">
-
-      <div class="category-item" *ngFor="let item of expenseCategoryList">
-
-        <img ng-src="{{item.imageUrl}}}" alt="Description"/>
-        <span>{{item.categoryName}}</span>
-
-      </div>
-
-    </div>
-
-  </div>
-
-  <br>
-
-  <hr>
 
 </div>

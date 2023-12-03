@@ -1,5 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
+/*
 @import url(https://unpkg.com/bootstrap@4.1.1/dist/css/bootstrap.min.css);
+*/
+
+/*
+my-colors:
+darkest: 01204e
+dark: 033682
+light-dark: 033682
+light: 4e60ec
+ */
 
 .center-div {
   display: flex;
@@ -14,7 +24,17 @@
 
 .center {
   position: absolute;
-  top: 25%;
-  left: 45%;
-  margin: -50px 0 0 -50px;
+  top: 50%;
+  left: 50%;
+  margin: auto;
+  transform: translate(-50%, -50%);
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }

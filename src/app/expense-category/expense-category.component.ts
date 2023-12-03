@@ -32,7 +32,7 @@ export class ExpenseCategoryComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.getExpenseCategories()
+    //this.getExpenseCategories()
   }
 
   searchCategory() {
@@ -53,7 +53,7 @@ export class ExpenseCategoryComponent implements OnInit {
   private getExpenseCategories() {
 
     this.expenseCategoryService.getAllCategories(
-      this.currentPage, this.pageSize, ["modified,desc"]
+      this.currentPage, this.pageSize, "modified,desc"
     ).subscribe({
 
       next: (response: HttpResponse<MymApiResponse<PageableResponse<ExpenseCategoryResponse>>>) => {

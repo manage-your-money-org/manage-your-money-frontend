@@ -1,38 +1,72 @@
-<div class="center">
+<div style="width: 100%; height: 100%; display: flex">
 
-  <div class="container">
+  <div style="color: #0687FF; width: 70%; position: relative;height: 100%;">
 
-    <h1>Login</h1>
-    <br>
+    <div class="login-container center">
 
-    <div class="textholder">
-      <input type="text" placeholder="email-id" name="email" [(ngModel)]="emailId" value="{{emailId}}">
-      <div *ngIf="!isEmailValid" style="color: orangered;">Please enter a valid email address</div>
+      <div class="sign-in-header">
+        <span>Sign In</span>
+      </div>
+
+      <div class="login-form-container">
+
+        <mat-form-field appearance="outline" style="width: 80%">
+          <mat-label>Email-Id</mat-label>
+          <input matInput placeholder="Enter email-id" [(ngModel)]="emailId">
+          <mat-icon matSuffix>email</mat-icon>
+        </mat-form-field>
+
+        <br>
+        <mat-form-field appearance="outline" style="width: 80%">
+          <mat-label>Password</mat-label>
+          <input matInput [type]="hide ? 'password' : 'text'" placeholder="Enter password" [(ngModel)]="password">
+          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                  [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <span (click)="navigateToForgotPassword()"><u
+          style="color: grey; cursor: pointer">Forgot your password?</u></span>
+
+        <mat-card (click)="handleLoginOnClickSignInBtn()" class="sing-in-button">
+
+          <div>
+
+            <span>SIGN IN</span>
+
+          </div>
+
+        </mat-card>
+
+
+      </div>
+
     </div>
-    <br>
 
-    <div class="textholder">
-      <input type="password" placeholder="password" name="password" [(ngModel)]="password" value="{{password}}">
-      <div *ngIf="!isPasswordValid" style="color: orangered;">Please enter a valid password</div>
+  </div>
+
+  <div class="login-right-side-container">
+
+    <div class="login-signup-section-container">
+
+      <div class="login-signup-header">
+        <span>Hello, Friend!</span>
+      </div>
+
+      <div class="login-signup-content">
+        <span>Enter your personal details and start managing your money</span>
+      </div>
+
+      <div (click)="navigateToRegisterUser()" class="div-button-stroke">
+
+        <span>SIGN UP</span>
+
+      </div>
+
     </div>
-
-    <br>
-    <button (click)="handleLoginOnClickSignInBtn()" class="btn btn-primary">Login</button>
-
-    <br><br>
-    <a href="/forgot-password">Forgot password</a>
-
-    <br><br>
-    <div class="alert alert-warning" *ngIf="isLoginInvalid">{{errorMessage}}</div>
-
-    <hr>
-
-    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center">
-      <p>Or</p>
-      <button (click)="registerUser()" class="btn">Register</button>
-    </div>
-
 
   </div>
 
 </div>
+

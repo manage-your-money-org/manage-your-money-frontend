@@ -1,0 +1,135 @@
+.login-right-side-container {
+
+  width: 30%;
+  height: 100%;
+  background-color: #4e60ec;
+  position: relative;
+  /*border-top-left-radius: 1000px;*/
+  /*border-bottom-left-radius: 1000px;*/
+}
+
+.login-container {
+
+  width: 50%;
+  padding: 15px;
+}
+
+.sign-in-header {
+
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.sign-in-header span {
+
+  font-weight: bold;
+  font-size: 40px;
+  padding: 3px;
+  font-family: Georgia, sans-serif;
+  color: #0687FF;
+  user-select: none;
+}
+
+.login-form-container {
+
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
+}
+
+.sing-in-button {
+
+  width: 200px;
+  height: 50px;
+  border-radius: 100px;
+  padding: 5px;
+  cursor: pointer;
+  background-color: #0687FF;
+  margin-top: 30px;
+}
+
+.sing-in-button div {
+
+  width: 100%;
+  height: 100%;
+  display: table;
+  text-align: center;
+}
+
+.sing-in-button span {
+
+  display: table-cell;
+  vertical-align: middle;
+  font-family: Bahnschrift, serif;
+  font-size: 15px;
+  color: aliceblue;
+  user-select: none;
+}
+
+.login-signup-section-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.login-signup-header {
+
+  padding: 10px;
+  text-align: center;
+}
+
+.login-signup-header span {
+
+  font-weight: bolder;
+  font-size: 35px;
+  font-family: Georgia, sans-serif;
+  color: aliceblue;
+  padding: 5px;
+}
+
+.login-signup-content {
+
+  padding: 10px;
+  margin-left: 20px;
+  margin-right: 20px;
+  text-align: center;
+}
+
+.login-signup-content span {
+
+  font-size: 15px;
+  font-family: Georgia, sans-serif;
+  color: aliceblue;
+  padding: 5px;
+  user-select: none;
+}
+
+.div-button-stroke {
+
+  width: 250px;
+  height: 50px;
+  border: 1px solid aliceblue;
+  border-radius: 100px;
+  padding: 5px;
+  display: table;
+  text-align: center;
+  cursor: pointer;
+  margin-top: 50px;
+}
+
+.div-button-stroke span {
+
+  display: table-cell;
+  vertical-align: middle;
+  font-family: Bahnschrift, serif;
+  font-size: 15px;
+  color: aliceblue;
+  user-select: none;
+}
