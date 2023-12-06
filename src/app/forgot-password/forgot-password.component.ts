@@ -40,10 +40,14 @@ export class ForgotPasswordComponent {
 
             this.isResponseValid = true;
             this.successResponse = response.body.body;
+          } else if (response.status === 204) {
+
+            this.isResponseValid = false;
+            this.errorResponse = "No account found with this email id."
           } else {
 
             this.isResponseValid = false;
-            this.errorResponse = response.body.message;
+            this.errorResponse = response.body.message !== null ? response.body.message : "Something went wrong!, Response status: " + response.status;
           }
         },
         error: (error) => {

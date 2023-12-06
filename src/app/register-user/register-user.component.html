@@ -22,7 +22,7 @@
 
   </div>
 
-  <div style="color: #0687FF; width: 70%; position: relative;height: 100%;">
+  <div class="login-register-bigger-side-container">
 
     <div class="login-signup-container center">
 
@@ -70,8 +70,10 @@
         </mat-form-field>
 
         <span *ngIf="!isFormValid" class="form-error">{{invalidFormMessage}}</span>
+        <span *ngIf="isRegistrationSuccessful && successMessage !== ''" class="form-success">{{successMessage}} <a
+          href="/login">Sign In</a></span>
 
-        <mat-card (click)="registerUser()" class="singIn-signUp-button">
+        <mat-card (click)="registerUser()" class="singIn-signUp-button" matRipple>
 
           <div>
             <span>SIGN UP</span>

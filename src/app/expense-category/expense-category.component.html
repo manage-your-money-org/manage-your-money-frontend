@@ -1,29 +1,52 @@
-<div class="expense-category-header">
+<mat-toolbar color="primary">
 
-  <div class="component-header-title">
-    <h2>Expense category</h2>
+  <span class="toolbar-title">Expense Category</span>
+  <span class="spacer"></span>
+  <div class="search-bar-in-toolbar">
+    <input type="text" placeholder="Search">
+    <mat-icon matSuffix style="color: black">search</mat-icon>
   </div>
 
-  <div class="expense-category-menus">
+  <div class="toolbar-menu-item-end">
 
-    <div class="search-menu-container" style="cursor: text">
-
-      <i class="material-icons" style="margin-right: 5px; margin-top: 1px">search</i>
-      <span class="search-span">Search</span>
-    </div>
-
-    <div class="sort-menu-container" style="cursor: pointer">
-
-      <i class="material-icons" style="margin-right: 5px; margin-top: 1px">sort</i>
-      <span class="sort-span">Sort</span>
-    </div>
-
-    <div class="graph-menu-container" style="cursor: pointer">
-
-      <i class="fa fa-pie-chart" style="font-size:24px; margin-right: 5px; margin-top: 1px"></i>
-      <span class="graph-span">Graph</span>
-    </div>
-
+    <span>Sort</span>
+    <mat-icon matSuffix style="color:black;">sort</mat-icon>
   </div>
 
-</div>
+  <div class="toolbar-menu-item-end">
+
+    <span>Graphs</span>
+    <mat-icon matSuffix style="color:black;">bar_chart</mat-icon>
+  </div>
+
+</mat-toolbar>
+
+<!--<div class="expense-category-header">-->
+
+<!--  <div class="component-header-title">-->
+<!--    <h2>Expense category</h2>-->
+<!--  </div>-->
+
+<!--  <div class="expense-category-menus">-->
+
+<!--    <div class="search-menu-container" style="cursor: text">-->
+
+<!--      <i class="material-icons" style="margin-right: 5px; margin-top: 1px">search</i>-->
+<!--      <span class="search-span">Search</span>-->
+<!--    </div>-->
+
+<!--    <div class="sort-menu-container" style="cursor: pointer">-->
+
+<!--      <i class="material-icons" style="margin-right: 5px; margin-top: 1px">sort</i>-->
+<!--      <span class="sort-span">Sort</span>-->
+<!--    </div>-->
+
+<!--    <div class="graph-menu-container" style="cursor: pointer">-->
+
+<!--      <i class="fa fa-pie-chart" style="font-size:24px; margin-right: 5px; margin-top: 1px"></i>-->
+<!--      <span class="graph-span">Graph</span>-->
+<!--    </div>-->
+
+<!--  </div>-->
+
+<!--</div>-->

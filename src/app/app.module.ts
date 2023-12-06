@@ -21,6 +21,9 @@ import {MatCardModule} from "@angular/material/card";
 import {MatButtonModule} from "@angular/material/button";
 import {MatDividerModule} from "@angular/material/divider";
 import {MatListModule} from "@angular/material/list";
+import {MatRippleModule} from "@angular/material/core";
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatToolbarModule} from "@angular/material/toolbar";
 
 @NgModule({
   declarations: [
@@ -40,13 +43,8 @@ import {MatListModule} from "@angular/material/list";
     InfiniteScrollModule,
     NgOptimizedImage,
     BrowserAnimationsModule,
-    MatIconModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatCardModule,
-    MatButtonModule,
-    MatDividerModule,
-    MatListModule
+    MatIconModule, MatInputModule, MatFormFieldModule, MatCardModule, MatButtonModule, MatDividerModule,
+    MatListModule, MatRippleModule, MatDialogModule, MatToolbarModule
   ],
   providers: [
     provideClientHydration()
