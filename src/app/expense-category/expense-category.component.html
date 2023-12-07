@@ -1,25 +1,49 @@
-<mat-toolbar color="primary">
+<div style="width: 100%; height: 100%; display: flex">
 
-  <span class="toolbar-title">Expense Category</span>
-  <span class="spacer"></span>
-  <div class="search-bar-in-toolbar">
-    <input type="text" placeholder="Search">
-    <mat-icon matSuffix style="color: black">search</mat-icon>
+  <div class="bigger-side-container">
+
+    <div class="section-header-container">
+
+      <span>All Expense Categories</span>
+
+    </div>
+
+    <div class="search-results"
+         infiniteScroll
+         [infiniteScrollDistance]="2"
+         [infiniteScrollThrottle]="1000"
+         (scrolled)="onScroll()"
+         [scrollWindow]="false">
+
+      <div class="expense-category-container">
+
+        <mat-card class="category-item" *ngFor="let item of expenseCategoryList">
+
+          <div class="image-container">
+
+            <img src="{{item.imageUrl}}" alt="{{item.categoryName}}">
+
+          </div>
+
+
+          <!--          <span>{{item.categoryName}}</span>-->
+
+        </mat-card>
+
+      </div>
+
+
+    </div>
+
   </div>
 
-  <div class="toolbar-menu-item-end">
+  <div class="smaller-side-container" style="background-color: #CCCCCC">
 
-    <span>Sort</span>
-    <mat-icon matSuffix style="color:black;">sort</mat-icon>
+
   </div>
 
-  <div class="toolbar-menu-item-end">
+</div>
 
-    <span>Graphs</span>
-    <mat-icon matSuffix style="color:black;">bar_chart</mat-icon>
-  </div>
-
-</mat-toolbar>
 
 <!--<div class="expense-category-header">-->
 

@@ -17,6 +17,7 @@ light: 4e60ec
 $theme: $manage-your-money-frontend-theme;
 
 $primary-default: mat.get-theme-color($theme, primary, default);
+$accent-color: mat.get-theme-color($theme, accent, A200);
 
 .center-div {
   display: flex;
@@ -48,7 +49,13 @@ body {
 
 /*-------------*/
 
-.login-register-smaller-side-container {
+.fixed-toolbar {
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+}
+
+.smaller-side-container {
 
   width: 30%;
   height: 100%;
@@ -56,7 +63,7 @@ body {
   position: relative;
 }
 
-.login-register-bigger-side-container {
+.bigger-side-container {
   color: $primary-default;
   width: 70%;
   position: relative;
@@ -171,9 +178,19 @@ body {
   color: darkgreen;
 }
 
-.toolbar-title {
+.toolbar-title-container {
+  height: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  cursor: pointer;
+}
 
+.toolbar-title {
   font-size: 20px;
+  user-select: none;
+  padding: 5px;
 }
 
 .search-bar-in-toolbar {
@@ -196,7 +213,7 @@ body {
   outline: none;
   border: none;
   font-weight: 500;
-  transition: 0.8s;
+  transition: 400ms;
   background: transparent;
 }
 
@@ -224,17 +241,94 @@ body {
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
 }
 
+// for width transition refer this:
+// https://stackoverflow.com/questions/52337025/no-css-transition-for-height-fit-content
 .toolbar-menu-item-end span {
-  display: none;
+  max-width: 0;
   font-weight: normal;
   color: black;
   background: transparent;
   margin-right: 5px;
-  padding: 2px;
   user-select: none;
-  transition: 0.8s;
+  transition: all ease-in-out 400ms;
+  overflow: hidden;
 }
 
 .toolbar-menu-item-end:hover span {
-  display: inline;
+  max-width: 150px;
+}
+
+.section-header-container {
+
+  width: 100%;
+  height: 70px;
+  background-color: $accent-color;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.section-header-container > span {
+
+  padding: 10px;
+  font-size: 25px;
+  color: #676767;
+
+}
+
+.search-results {
+  overflow: scroll;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+
+.expense-category-container {
+
+  display: flex;
+  border: 1px solid rgba(0, 0, 0, 0);
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.category-item {
+
+  width: 250px;
+  height: 250px;
+  margin: 20px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  transition: 0.8s;
+}
+
+.image-container {
+
+  height: 100%;
+  width: 100%;
+  border-bottom: 1px solid #a4a4a4;
+  transition: 0.5s;
+}
+
+.image-container > img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: center center;
+  transition: 0.5s;
+}
+
+.category-item:hover {
+
+  background-color: $primary-default;
+}
+
+.category-item:hover > .image-container {
+
+  height: 90%;
+  width: 90%;
 }

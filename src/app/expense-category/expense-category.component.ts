@@ -16,7 +16,7 @@ export class ExpenseCategoryComponent implements OnInit {
   expenseCategoryList: ExpenseCategoryResponse[] = [];
   pageableResponse: PageableResponse<ExpenseCategoryResponse>;
   currentPage = 0;
-  pageSize = 6;
+  pageSize = 10;
 
   isError = false;
   errorMessage = '';
@@ -32,7 +32,7 @@ export class ExpenseCategoryComponent implements OnInit {
 
   ngOnInit(): void {
 
-    //this.getExpenseCategories()
+    this.getExpenseCategories()
   }
 
   searchCategory() {
