@@ -2,12 +2,6 @@
 
   <div class="bigger-side-container">
 
-    <div class="section-header-container">
-
-      <span>All Expense Categories</span>
-
-    </div>
-
     <div class="search-results"
          infiniteScroll
          [infiniteScrollDistance]="2"
@@ -17,7 +11,13 @@
 
       <div class="expense-category-container">
 
-        <mat-card class="category-item" *ngFor="let item of expenseCategoryList">
+        <div class="section-header-container">
+
+          <span>All Expense Categories</span>
+
+        </div>
+
+        <mat-card class="category-item" *ngFor="let item of expenseCategoryList; trackBy: trackByFn">
 
           <div class="image-container">
 

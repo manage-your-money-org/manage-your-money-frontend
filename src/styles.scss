@@ -288,7 +288,6 @@ body {
 .expense-category-container {
 
   display: flex;
-  border: 1px solid rgba(0, 0, 0, 0);
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
@@ -310,7 +309,6 @@ body {
 
   height: 100%;
   width: 100%;
-  border-bottom: 1px solid #a4a4a4;
   transition: 0.5s;
 }
 
@@ -324,11 +322,11 @@ body {
 
 .category-item:hover {
 
-  background-color: $primary-default;
+  background-color: #CCCCCC;
 }
 
 .category-item:hover > .image-container {
 
-  height: 90%;
-  width: 90%;
+  height: 95%;
+  width: 95%;
 }

@@ -50,6 +50,10 @@ export class ExpenseCategoryComponent implements OnInit {
     }
   }
 
+  trackByFn(index, item) {
+    return item.key;
+  }
+
   private getExpenseCategories() {
 
     this.expenseCategoryService.getAllCategories(
