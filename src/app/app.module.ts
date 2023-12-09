@@ -24,6 +24,7 @@ import {MatListModule} from "@angular/material/list";
 import {MatRippleModule} from "@angular/material/core";
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatToolbarModule} from "@angular/material/toolbar";
+import {ExpenseCategoryItemComponent} from './expense-category-item/expense-category-item.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import {MatToolbarModule} from "@angular/material/toolbar";
     RegisterUserComponent,
     UserComponent,
     ForgotPasswordComponent,
-    AppHeaderComponent
+      AppHeaderComponent,
+      ExpenseCategoryItemComponent
   ],
   imports: [
     BrowserModule,

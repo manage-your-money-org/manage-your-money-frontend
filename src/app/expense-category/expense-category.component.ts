@@ -5,84 +5,116 @@ import {ExpenseCategoryResponse} from "../shared/models/response/ExpenseCategory
 import {PageableResponse} from "../shared/models/response/PageableResponse";
 import {HttpResponse} from "@angular/common/http";
 import {MymApiResponse} from "../shared/models/response/MymApiResponse";
+import {ExpenseService} from "../services/expense/expense.service";
+import {DateUtil} from "../shared/util/DateUtil";
+import {FilterRequest} from "../shared/models/request/FilterRequest";
 
 @Component({
-  selector: 'app-expense-category',
-  templateUrl: './expense-category.component.html',
-  styleUrl: './expense-category.component.css'
+    selector: 'app-expense-category',
+    templateUrl: './expense-category.component.html',
+    styleUrl: './expense-category.component.css'
 })
 export class ExpenseCategoryComponent implements OnInit {
 
-  expenseCategoryList: ExpenseCategoryResponse[] = [];
-  pageableResponse: PageableResponse<ExpenseCategoryResponse>;
-  currentPage = 0;
-  pageSize = 10;
+    expenseCategoryList: ExpenseCategoryResponse[] = [];
+    pageableResponse: PageableResponse<ExpenseCategoryResponse>;
+    currentPage = 0;
+    pageSize = 10;
 
-  isError = false;
-  errorMessage = '';
-  isLoading = false;
+    isError = false;
+    errorMessage = '';
+    isLoading = false;
 
-  totalPages = 0;
-  isLastPage = false;
+    totalPages = 0;
+    isLastPage = false;
 
-  constructor(private router: Router, private expenseCategoryService: ExpenseCategoryService) {
-  }
+    selectedItem: ExpenseCategoryResponse;
 
-  toggleLoading = () => this.isLoading = !this.isLoading;
-
-  ngOnInit(): void {
-
-    this.getExpenseCategories()
-  }
-
-  searchCategory() {
-
-    // todo: search category on backend
-  }
-
-  onScroll() {
-
-    console.log("On scrolled")
-
-    if (!this.isLastPage) {
-      this.currentPage++;
-      this.getExpenseCategories();
+    constructor(private router: Router, private expenseCategoryService: ExpenseCategoryService, private expenseService: ExpenseService) {
     }
-  }
 
-  trackByFn(index, item) {
-    return item.key;
-  }
+    selectItem(item: ExpenseCategoryResponse) {
+        this.selectedItem = item;
+    }
 
-  private getExpenseCategories() {
+    toggleLoading = () => this.isLoading = !this.isLoading;
 
-    this.expenseCategoryService.getAllCategories(
-      this.currentPage, this.pageSize, "modified,desc"
-    ).subscribe({
+    ngOnInit(): void {
 
-      next: (response: HttpResponse<MymApiResponse<PageableResponse<ExpenseCategoryResponse>>>) => {
+        this.getExpenseCategories()
+    }
 
-        if (response.status === 200) {
+    onScroll() {
 
-          this.isError = false;
-          this.pageableResponse = response.body.body;
-          this.isLastPage = this.pageableResponse.last;
-          this.expenseCategoryList = [...this.expenseCategoryList, ...this.pageableResponse.content]
+        console.log("On scrolled")
+
+        if (!this.isLastPage) {
+            this.currentPage++;
+            this.getExpenseCategories();
         }
+    }
 
-        console.log("Category list: " + this.expenseCategoryList.length);
-        console.log("Category content list: " + this.pageableResponse.content.length);
-      },
+    trackByFn(index, item) {
+        return item.key;
+    }
 
-      error: (error) => {
+    getFormattedDate(longValue: number): string {
 
-        this.isError = true;
-        this.errorMessage = "Unable to fetch expense categories - \nstatus: " + error.status + "\nmessage: " + (error.error.message === null || error.error.message === '') ? error.message : error.error.message;
-      },
-      complete: () => {
-        this.toggleLoading();
-      }
-    });
-  }
+        const date = new Date(longValue);
+        return date.toLocaleDateString(); // Adjust format as needed
+    }
 
+    private getExpenseCategories() {
+
+        this.expenseCategoryService.getAllCategories(
+            this.currentPage, this.pageSize, "modified,desc"
+        ).subscribe({
+
+            next: (response: HttpResponse<MymApiResponse<PageableResponse<ExpenseCategoryResponse>>>) => {
+
+                if (response.status === 200) {
+
+                    this.isError = false;
+                    this.pageableResponse = response.body.body;
+                    this.isLastPage = this.pageableResponse.last;
+
+                    this.expenseCategoryList = [...this.expenseCategoryList, ...this.pageableResponse.content]
+
+                    if (this.currentPage === 0 && this.expenseCategoryList.length !== 0) {
+
+                        let dateRange = DateUtil.getTimeInMillisForFirstAndLastDayOfCurrentMonth();
+
+                        const filterRequest: FilterRequest = {
+                            categoryKeys: [this.expenseCategoryList[0].key],
+                            paymentMethodKeys: null,
+                            dateRange: {first: dateRange.firstDay, second: dateRange.lastDay}
+                        };
+
+                        this.expenseService.getTotalExpenseAmountSum(filterRequest).subscribe((response) => {
+                            this.expenseCategoryList[0].thisMonthExpense = response.body.body.totalExpenseAmount;
+                        });
+
+                        filterRequest.dateRange = null;
+
+                        this.expenseService.getTotalExpenseAmountSum(filterRequest).subscribe((response) => {
+                            this.expenseCategoryList[0].totalExpense = response.body.body.totalExpenseAmount;
+                        });
+
+                        this.selectedItem = this.expenseCategoryList[0];
+                    }
+                }
+                console.log("Category list: " + this.expenseCategoryList.length);
+                console.log("Category content list: " + this.pageableResponse.content.length);
+            },
+
+            error: (error) => {
+
+                this.isError = true;
+                this.errorMessage = "Unable to fetch expense categories - \nstatus: " + error.status + "\nmessage: " + (error.error.message === null || error.error.message === '') ? error.message : error.error.message;
+            },
+            complete: () => {
+                this.toggleLoading();
+            }
+        });
+    }
 }

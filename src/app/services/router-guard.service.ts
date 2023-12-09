@@ -17,11 +17,8 @@ class RouterGuardService {
     return this.authenticationService.getUserInformation().pipe(
       map((response) => {
         console.log("Router guard: " + response.status)
-        if (response.status === 200) {
-          return true;
-        }
-        this.router.navigate(["/login"])
-        return false;
+          return response.status === 200;
+
       }),
       catchError((error: HttpErrorResponse) => {
         // Handle the error here

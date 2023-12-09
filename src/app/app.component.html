@@ -25,7 +25,8 @@
 
 </mat-toolbar>
 
-<div style="width: 100%; height: 100%; margin-top: 60px">
+<div style="width: 100%; height: 100%;"
+     [ngClass]="{'when-toolbar-hidden': !shouldShowHeaderComponent, 'when-toolbar-visible': shouldShowHeaderComponent}">
   <router-outlet (activate)="onActivate($event)"></router-outlet>
 </div>
 
