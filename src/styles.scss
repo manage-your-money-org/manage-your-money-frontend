@@ -185,12 +185,14 @@ body {
   justify-content: center;
   flex-direction: column;
   cursor: pointer;
+  caret-color: transparent;
 }
 
 .toolbar-title {
   font-size: 20px;
   user-select: none;
   padding: 5px;
+  caret-color: transparent;
 }
 
 .search-bar-in-toolbar {
@@ -239,6 +241,7 @@ body {
   align-items: center;
   margin-right: 10px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  caret-color: transparent;
 }
 
 // for width transition refer this:
@@ -252,6 +255,7 @@ body {
   user-select: none;
   transition: all ease-in-out 400ms;
   overflow: hidden;
+  caret-color: transparent;
 }
 
 .toolbar-menu-item-end:hover span {
@@ -267,6 +271,7 @@ body {
   display: flex;
   justify-content: center;
   flex-direction: column;
+  caret-color: transparent;
 }
 
 .section-header-container > span {
@@ -274,6 +279,7 @@ body {
   padding: 10px;
   font-size: 25px;
   color: #676767;
+  caret-color: transparent;
 }
 
 .search-results {
@@ -282,6 +288,7 @@ body {
   flex-direction: column;
   align-items: center;
   height: 100%;
+  caret-color: transparent;
 }
 
 .expense-category-container {
@@ -290,6 +297,7 @@ body {
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
+  caret-color: transparent;
 }
 
 .category-item {
@@ -304,6 +312,7 @@ body {
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
   transition: 0.8s;
   background-color: rgba(226, 162, 67, 0.56);
+  caret-color: transparent;
 }
 
 .expense-category-item-container {
@@ -312,6 +321,7 @@ body {
   width: 100%;
   position: relative;
   transition: 200ms;
+  caret-color: transparent;
 }
 
 .image-container {
@@ -343,11 +353,13 @@ body {
 
 .not-selected:hover > .expense-category-item-container {
   transform: scale(95%);
+  caret-color: transparent;
 }
 
 .selected-item > .expense-category-item-container {
   height: 95%;
   width: 95%;
+  caret-color: transparent;
 }
 
 .category-item-name-and-menu-container {
@@ -363,6 +375,7 @@ body {
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  caret-color: transparent;
 }
 
 .category-item-name-and-menu-container > span {
@@ -371,7 +384,7 @@ body {
   font-size: 25px;
   font-weight: bold;
   user-select: none;
-
+  caret-color: transparent;
 }
 
 .menu-container {
@@ -380,6 +393,7 @@ body {
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  caret-color: transparent;
 }
 
 
@@ -389,6 +403,7 @@ body {
   flex-direction: column;
   width: 100%;
   height: 100%;
+  caret-color: transparent;
 }
 
 .expense-category-image {
@@ -405,6 +420,7 @@ body {
   object-fit: cover;
   object-position: center center;
   transition: 0.5s;
+  caret-color: transparent;
 }
 
 .expense-category-description-container {
@@ -414,6 +430,7 @@ body {
   width: 100%;
   background-color: white;
   border-left: 1px solid gray;
+  caret-color: transparent;
 }
 
 .detail-container {
@@ -421,12 +438,14 @@ body {
   padding: 5px;
   margin-top: 10px;
   margin-left: 10px;
+  caret-color: transparent;
 }
 
 .detail-header {
   color: black;
   font-size: 13px;
   padding: 3px;
+  caret-color: transparent;
 }
 
 .detail-value {
@@ -434,6 +453,7 @@ body {
   font-size: 15px;
   margin-left: 2px;
   padding: 3px;
+  caret-color: transparent;
 }
 
 .preview-header {
@@ -445,6 +465,7 @@ body {
   display: flex;
   flex-direction: row;
   width: 100%;
+  caret-color: transparent;
 }
 
 .preview-header-category-name {
@@ -452,6 +473,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  caret-color: transparent;
 }
 
 .preview-header-menu-buttons {
@@ -461,9 +483,44 @@ body {
   flex-direction: row;
   justify-content: flex-end;
   margin-right: 5px;
+  caret-color: transparent;
 }
 
 .preview-header-menu-buttons > button {
   margin-left: 3px;
   margin-right: 3px;
+  caret-color: transparent;
+}
+
+.add-expense-category-button {
+
+  width: 150px;
+  height: 50px;
+  border-radius: 200px;
+  background-color: $primary-default;
+  position: fixed;
+  display: flex;
+  bottom: 20px;
+  right: 40px;
+  z-index: 1000;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: width 200ms;
+  caret-color: transparent;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+}
+
+.add-expense-category-button:hover {
+  width: 140px;
+}
+
+.add-expense-category-button > span {
+
+  font-size: 15px;
+  color: white;
+  user-select: none;
+  caret-color: transparent;
+  padding: 5px;
 }
