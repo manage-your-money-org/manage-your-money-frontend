@@ -1,29 +1,106 @@
-<div class="expense-category-header">
+<div style="width: 100%; height: 100%; display: flex">
 
-  <div class="component-header-title">
-    <h2>Expense category</h2>
-  </div>
+    <div class="bigger-side-container">
 
-  <div class="expense-category-menus">
+        <div class="search-results"
+             infiniteScroll
+             [infiniteScrollDistance]="2"
+             [infiniteScrollThrottle]="1000"
+             (scrolled)="onScroll()"
+             [scrollWindow]="false">
 
-    <div class="search-menu-container" style="cursor: text">
+            <div class="expense-category-container">
 
-      <i class="material-icons" style="margin-right: 5px; margin-top: 1px">search</i>
-      <span class="search-span">Search</span>
+                <!--                <div class="section-header-container">-->
+
+                <!--                    <span>All Expense Categories</span>-->
+
+                <!--                </div>-->
+
+                <app-expense-category-item
+                        *ngFor="let item of expenseCategoryList; trackBy: trackByFn"
+                        [expenseCategoryItem]="item"
+                        [isSelected]="item === selectedItem"
+                        (itemSelected)="selectItem(item)">
+                </app-expense-category-item>
+
+            </div>
+
+          <div class="add-expense-category-button">
+
+            <mat-icon matPrefix style="color:white;margin-right: 3px">add</mat-icon>
+            <span>Add Category</span>
+          </div>
+
+        </div>
+
+
     </div>
 
-    <div class="sort-menu-container" style="cursor: pointer">
+    <div class="smaller-side-container" style="background-color: #CCCCCC">
 
-      <i class="material-icons" style="margin-right: 5px; margin-top: 1px">sort</i>
-      <span class="sort-span">Sort</span>
+        <div class="category-detail-container">
+
+            <div class="expense-category-image">
+
+                <img src="{{selectedItem.imageUrl}}" alt="{{selectedItem.categoryName}}">
+
+            </div>
+
+            <div class="expense-category-description-container">
+
+                <div class="preview-header">
+
+                    <div class="preview-header-category-name">
+                        <span style="color: black; font-size: 20px">{{selectedItem.categoryName}}</span>
+                    </div>
+
+                    <div class="preview-header-menu-buttons">
+
+                        <button mat-icon-button aria-label="Edit" color="primary">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+
+                        <button mat-icon-button aria-label="Delete" color="warn">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="detail-container">
+                    <span class="detail-header">Category description</span>
+                    <br>
+                    <span class="detail-value">{{selectedItem.categoryName === '' ? 'No description!' : selectedItem.categoryName}}</span>
+                </div>
+
+                <div class="detail-container">
+                    <span class="detail-header">Created</span>
+                    <br>
+                    <span class="detail-value">{{selectedItem.created | date: 'dd-MM-yyyy hh:mm:ss a'}}</span>
+                </div>
+
+                <div class="detail-container">
+                    <span class="detail-header">Modified</span>
+                    <br>
+                    <span class="detail-value">{{selectedItem.modified | date: 'dd-MM-yyyy h:mm:ss a'}}</span>
+                </div>
+
+                <div class="detail-container">
+                    <span class="detail-header">This month expense</span>
+                    <br>
+                    <span class="detail-value">₹ {{selectedItem.thisMonthExpense}}</span>
+                </div>
+
+                <div class="detail-container">
+                    <span class="detail-header">Total expense</span>
+                    <br>
+                    <span class="detail-value">₹ {{selectedItem.totalExpense | number: '1.2-2'}}</span>
+                </div>
+
+            </div>
+
+        </div>
+
     </div>
-
-    <div class="graph-menu-container" style="cursor: pointer">
-
-      <i class="fa fa-pie-chart" style="font-size:24px; margin-right: 5px; margin-top: 1px"></i>
-      <span class="graph-span">Graph</span>
-    </div>
-
-  </div>
 
 </div>

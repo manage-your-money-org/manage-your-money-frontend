@@ -1,6 +1,6 @@
 <div style="width: 100%; height: 100%; display: flex">
 
-  <div style="color: #0687FF; width: 70%; position: relative;height: 100%;">
+  <div class="bigger-side-container">
 
     <div class="login-signup-container center">
 
@@ -27,12 +27,12 @@
           </button>
         </mat-form-field>
 
+        <span *ngIf="!isLoginInvalid" class="form-error">{{errorMessage}}</span>
+
         <span (click)="navigateToForgotPassword()"><u
           style="color: grey; cursor: pointer">Forgot your password?</u></span>
 
-        <span *ngIf="!isLoginInvalid" class="form-error">{{errorMessage}}</span>
-
-        <mat-card (click)="handleLoginOnClickSignInBtn()" class="singIn-signUp-button">
+        <mat-card (click)="handleLoginOnClickSignInBtn()" matRipple class="singIn-signUp-button">
 
           <div>
             <span>SIGN IN</span>
@@ -47,7 +47,7 @@
 
   </div>
 
-  <div class="login-register-smaller-side-container">
+  <div class="smaller-side-container">
 
     <div class="login-signup-section-container">
 

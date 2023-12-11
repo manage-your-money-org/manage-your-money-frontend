@@ -54,7 +54,7 @@ export class RegisterUserComponent implements OnInit {
 
           if (status == 201) {
             this.isRegistrationSuccessful = true;
-            this.successMessage = response.body.message;
+            this.successMessage = 'User created successfully. Please check your email for verification and '
           } else {
 
             this.isRegistrationSuccessful = false;

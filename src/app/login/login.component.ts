@@ -4,6 +4,8 @@ import {UserAuthenticationService} from "../services/user-authentication/user-au
 import {HttpResponse} from "@angular/common/http";
 import {LoginRequest} from "../shared/models/request/LoginRequest";
 import {MymUtil} from '../shared/util/MymUtil';
+import {MatDialog} from "@angular/material/dialog";
+import {ForgotPasswordComponent} from "../forgot-password/forgot-password.component";
 
 @Component({
   selector: 'app-login',
@@ -21,7 +23,7 @@ export class LoginComponent implements OnInit {
 
   hide = true;
 
-  constructor(private router: Router, private authenticationService: UserAuthenticationService) {
+  constructor(private router: Router, private authenticationService: UserAuthenticationService, private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -73,7 +75,7 @@ export class LoginComponent implements OnInit {
           },
           error: (error) => {
 
-            this.isLoginInvalid = true;
+            this.isLoginInvalid = false;
 
             this.errorMessage = "Error while Login: " + error.message;
 
@@ -90,7 +92,9 @@ export class LoginComponent implements OnInit {
   }
 
   navigateToForgotPassword() {
-    this.router.navigate(['/forgot-password']);
+    //this.router.navigate(['/forgot-password']);
+
+    this.dialog.open(ForgotPasswordComponent);
   }
 
   navigateToRegisterUser() {

@@ -1,7 +1,32 @@
-<!--header-->
-<app-header *ngIf="shouldShowHeaderComponent"></app-header>
+<!--</app-header>-->
 
-<div style="width: 100%; height: 100%">
+<mat-toolbar *ngIf="shouldShowHeaderComponent" class="fixed-toolbar" color="primary" style="height: 60px">
+
+  <div class="toolbar-title-container">
+    <span class="toolbar-title">ManageYourMoney</span>
+  </div>
+  <span class="spacer"></span>
+  <div class="search-bar-in-toolbar">
+    <input type="text" placeholder="Search">
+    <mat-icon matSuffix style="color: black">search</mat-icon>
+  </div>
+
+  <div class="toolbar-menu-item-end">
+
+    <span>Sort</span>
+    <mat-icon matSuffix style="color:black;">sort</mat-icon>
+  </div>
+
+  <div class="toolbar-menu-item-end">
+
+    <span>Graphs</span>
+    <mat-icon matSuffix style="color:black;">bar_chart</mat-icon>
+  </div>
+
+</mat-toolbar>
+
+<div style="width: 100%; height: 100%;"
+     [ngClass]="{'when-toolbar-hidden': !shouldShowHeaderComponent, 'when-toolbar-visible': shouldShowHeaderComponent}">
   <router-outlet (activate)="onActivate($event)"></router-outlet>
 </div>
 
