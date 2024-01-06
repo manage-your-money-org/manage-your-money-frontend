@@ -12,14 +12,15 @@
 
         <mat-form-field appearance="outline" style="width: 80%">
           <mat-label>Email-Id</mat-label>
-          <input matInput placeholder="Enter email-id" [(ngModel)]="emailId" required>
+          <input matInput placeholder="Enter email-id" name="emailId" [(ngModel)]="emailId" required>
           <mat-icon matSuffix>email</mat-icon>
         </mat-form-field>
 
         <br>
         <mat-form-field appearance="outline" style="width: 80%">
           <mat-label>Password</mat-label>
-          <input matInput [type]="hide ? 'password' : 'text'" placeholder="Enter password" [(ngModel)]="password"
+          <input matInput [type]="hide ? 'password' : 'text'" placeholder="Enter password" name="password"
+                 [(ngModel)]="password"
                  required>
           <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
                   [attr.aria-pressed]="hide">
@@ -27,12 +28,12 @@
           </button>
         </mat-form-field>
 
-        <span *ngIf="!isLoginInvalid" class="form-error">{{errorMessage}}</span>
+        <span *ngIf="!isLoginValid" class="form-error">{{errorMessage}}</span>
 
         <span (click)="navigateToForgotPassword()"><u
           style="color: grey; cursor: pointer">Forgot your password?</u></span>
 
-        <mat-card (click)="handleLoginOnClickSignInBtn()" matRipple class="singIn-signUp-button">
+        <mat-card (click)="onSignInButtonClicked()" matRipple class="submit-button">
 
           <div>
             <span>SIGN IN</span>

@@ -1,20 +1,22 @@
 <!--<div [ngClass]="{'selected-item': isSelected, 'category-item': !isSelected}" (click)="onItemClick()">-->
-<div class="category-item" [ngClass]="{'selected-item': isSelected, 'not-selected': !isSelected}"
+<div class="category-item" [ngClass]="{'selected-category-item': isSelected, 'not-selected-category-item': !isSelected}"
      (click)="onItemClick()">
 
   <div class="expense-category-item-container">
 
     <div class="image-container">
-      <img src="{{expenseCategoryItem.imageUrl}}" alt="{{expenseCategoryItem.categoryName}}">
+      <img
+        src="{{expenseCategoryItem.imageUrl === null || expenseCategoryItem.imageUrl === '' ? 'assets/no_image_placeholder.jpg' : expenseCategoryItem.imageUrl}}"
+        alt="{{expenseCategoryItem.categoryName}}" class="image-fit">
     </div>
 
-    <div class="category-item-name-and-menu-container">
+    <div class="transparent-container category-item-name-and-menu-container">
 
       <span *ngIf="!isSelected">{{expenseCategoryItem.categoryName}}</span>
 
       <div *ngIf="isSelected" class="menu-container">
 
-        <button mat-raised-button color="accent">Show Expenses</button>
+        <button mat-raised-button color="accent" (click)="navigateToExpensePage()">Show Expenses</button>
 
       </div>
 

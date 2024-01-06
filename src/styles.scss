@@ -55,6 +55,12 @@ body {
   z-index: 1000;
 }
 
+.page-below-toolbar {
+  width: 100%;
+  height: calc(100% - 60px);
+  padding-top: 60px;
+}
+
 .smaller-side-container {
 
   width: 30%;
@@ -195,7 +201,7 @@ body {
   caret-color: transparent;
 }
 
-.search-bar-in-toolbar {
+.search-bar {
 
   height: 25px;
   display: flex;
@@ -224,6 +230,14 @@ body {
   width: 400px;
 }
 
+.search-bar-for-image-searching input {
+  width: 400px;
+  outline: none;
+  border: none;
+  font-weight: 500;
+  transition: 400ms;
+  background: transparent;
+}
 
 .spacer {
   flex: 1 1 auto;
@@ -315,6 +329,21 @@ body {
   caret-color: transparent;
 }
 
+.unsplash-search-image-item {
+
+  width: 100px;
+  height: 100px;
+  margin: 20px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  transition: 0.8s;
+  background-color: rgba(226, 162, 67, 0.56);
+  caret-color: transparent;
+}
+
 .expense-category-item-container {
 
   height: 100%;
@@ -339,7 +368,7 @@ body {
   transition: 0.5s;
 }
 
-.selected-item {
+.selected-category-item {
   //width: 250px;
   //height: 250px;
   //margin: 20px;
@@ -351,18 +380,18 @@ body {
   background-color: #E2A243;
 }
 
-.not-selected:hover > .expense-category-item-container {
+.not-selected-category-item:hover > .expense-category-item-container {
   transform: scale(95%);
   caret-color: transparent;
 }
 
-.selected-item > .expense-category-item-container {
+.selected-category-item > .expense-category-item-container {
   height: 95%;
   width: 95%;
   caret-color: transparent;
 }
 
-.category-item-name-and-menu-container {
+.transparent-container {
 
   height: 100%;
   width: 100%;
@@ -385,6 +414,8 @@ body {
   font-weight: bold;
   user-select: none;
   caret-color: transparent;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .menu-container {
@@ -413,14 +444,17 @@ body {
   width: 100%;
 }
 
-.expense-category-image > img {
-
-  height: 100%;
-  width: 100%;
+.image-fit {
   object-fit: cover;
   object-position: center center;
   transition: 0.5s;
   caret-color: transparent;
+}
+
+.expense-category-image > img {
+
+  height: 100%;
+  width: 100%;
 }
 
 .expense-category-description-container {
@@ -524,3 +558,42 @@ body {
   caret-color: transparent;
   padding: 5px;
 }
+
+.form-container {
+
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.form-container form {
+
+  width: 70%;
+}
+
+.input-full-width {
+  width: 100%;
+}
+
+.submit-button div {
+
+  width: 100%;
+  height: 100%;
+  display: table;
+  text-align: center;
+}
+
+.submit-button span {
+
+  display: table-cell;
+  vertical-align: middle;
+  font-family: Bahnschrift, serif;
+  font-size: 15px;
+  color: aliceblue;
+  user-select: none;
+}
+

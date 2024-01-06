@@ -1,0 +1,112 @@
+<div style="display: flex;" class="page-below-toolbar">
+
+  <div class="bigger-side-container">
+
+    <div class="form-container">
+
+      <div class="signIn-signUp-header">
+        <span><u>{{key.trim() !== 'add' ? 'Edit' : 'Add'}} Category</u></span>
+      </div>
+
+      <form>
+
+        <div style="width: 100%; display: flex; justify-content: center; align-items: center">
+
+          <div style="position: relative; width: 50%; height: 200px;">
+
+            <img src="{{imageUrl === null || imageUrl === '' ? 'assets/no_image_placeholder.jpg' : imageUrl}}"
+                 style="width: 100%; height: 200px" class="image-fit">
+
+            <!--            <div style="position:absolute; top:50%; left: 50%; transform: translate(-50%,-50%); background-color: rgba(0, 0, 0, 0.31); width: 100%; height: 200px">-->
+
+            <!--              -->
+
+            <!--            </div>-->
+
+          </div>
+
+        </div>
+
+        <br>
+        <mat-form-field class="input-full-width">
+          <mat-label>Category name</mat-label>
+          <input matInput #category_name maxlength="60" placeholder="Ex. Shopping" name="categoryName"
+                 [(ngModel)]="categoryName"
+                 value="{{categoryName}}" required>
+          <mat-hint align="end">{{category_name.value.length}} / 60</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field class="input-full-width">
+
+          <mat-label>Category description</mat-label>
+          <textarea matInput #category_description maxlength="250" name="categoryDescription"
+                    [(ngModel)]="categoryDescription"
+                    value="{{categoryDescription}}" style="min-height: 50px"></textarea>
+          <mat-hint align="end">{{category_description.value.length}} / 250</mat-hint>
+        </mat-form-field>
+
+        <span *ngIf="errorMessage !== ''" class="form-error">{{errorMessage}}</span>
+
+        <div style="width: 100%; display: flex; justify-content: center;">
+          <mat-card (click)="onSubmitButtonClicked()" matRipple class="submit-button">
+            <div><span>Submit</span></div>
+          </mat-card>
+        </div>
+
+      </form>
+    </div>
+
+
+  </div>
+
+  <div class="smaller-side-container" style="background-color: whitesmoke">
+
+    <div style="display: flex; width: 100%; height: 100%; flex-direction: column">
+
+      <br>
+
+      <div class="search-bar search-bar-for-image-searching">
+        <input type="text" placeholder="Search category image" [(ngModel)]="searchInput"
+               (keyup.enter)="searchImage(false)">
+        <mat-icon (click)="searchImage(false)" matSuffix style="color: black">search</mat-icon>
+      </div>
+
+      <div style="height: 99%">
+
+        <div class="search-results"
+             infiniteScroll
+             [infiniteScrollDistance]="2"
+             [infiniteScrollThrottle]="1000"
+             (scrolled)="onScroll()"
+             [scrollWindow]="false">
+
+          <div class="expense-category-container">
+
+            <!--                <div class="section-header-container">-->
+
+            <!--                    <span>All Expense Categories</span>-->
+
+            <!--                </div>-->
+
+            <app-unsplash-image-item
+              *ngFor="let item of unsplashPhotosList; trackBy: trackByFn"
+              [unsplashImageItem]="item"
+              [isSelected]="item === selectedUnsplashItem"
+              (selectedUnsplashImage)="selectItem(item)">
+            </app-unsplash-image-item>
+
+          </div>
+
+          <mat-progress-bar *ngIf="isLoading" style="padding: 10px; margin: 10px"
+                            mode="indeterminate"></mat-progress-bar>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+</div>

@@ -10,7 +10,6 @@ import {ExpenseCategoryComponent} from './expense-category/expense-category.comp
 import {RegisterUserComponent} from './register-user/register-user.component';
 import {UserComponent} from './user/user.component';
 import {ForgotPasswordComponent} from './forgot-password/forgot-password.component';
-import {AppHeaderComponent} from './app-header/app-header.component';
 import {InfiniteScrollModule} from "ngx-infinite-scroll";
 import {NgOptimizedImage} from "@angular/common";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -25,6 +24,10 @@ import {MatRippleModule} from "@angular/material/core";
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {ExpenseCategoryItemComponent} from './expense-category-item/expense-category-item.component';
+import {AddEditExpenseCategoryComponent} from './add-edit-expense-category/add-edit-expense-category.component';
+import {UnsplashImageItemComponent} from './unsplash-image-item/unsplash-image-item.component';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {DeleteDialogComponent} from './delete-dialog/delete-dialog.component';
 
 @NgModule({
   declarations: [
@@ -34,8 +37,10 @@ import {ExpenseCategoryItemComponent} from './expense-category-item/expense-cate
     RegisterUserComponent,
     UserComponent,
     ForgotPasswordComponent,
-      AppHeaderComponent,
-      ExpenseCategoryItemComponent
+    ExpenseCategoryItemComponent,
+    AddEditExpenseCategoryComponent,
+    UnsplashImageItemComponent,
+    DeleteDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +51,7 @@ import {ExpenseCategoryItemComponent} from './expense-category-item/expense-cate
     NgOptimizedImage,
     BrowserAnimationsModule,
     MatIconModule, MatInputModule, MatFormFieldModule, MatCardModule, MatButtonModule, MatDividerModule,
-    MatListModule, MatRippleModule, MatDialogModule, MatToolbarModule
+    MatListModule, MatRippleModule, MatDialogModule, MatToolbarModule, MatProgressBarModule
   ],
   providers: [
     provideClientHydration()

@@ -1,0 +1,17 @@
+<!--<div [ngClass]="{'selected-item': isSelected, 'category-item': !isSelected}" (click)="onItemClick()">-->
+<div class="unsplash-search-image-item"
+     [ngClass]="{'selected-category-item': isSelected, 'not-selected-category-item': !isSelected}"
+     (click)="onItemClick()">
+
+  <div class="expense-category-item-container">
+
+    <div class="image-container">
+      <img
+        src="{{unsplashImageItem.urls.regular}}"
+        alt="{{unsplashImageItem.alt_description}}" class="image-fit">
+    </div>
+
+  </div>
+
+
+</div>
