@@ -47,4 +47,8 @@ export class ExpenseCategoryItemComponent {
         }
     }
 
+  navigateToExpensePage() {
+
+    // send this.expenseCategoryItem.key as parameter
+  }
 }

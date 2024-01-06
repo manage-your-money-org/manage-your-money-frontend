@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
   password: string = '';
   isPasswordValid = true;
   errorMessage: string = ""
-  isLoginInvalid: boolean = false;
+  isLoginValid: boolean = false;
 
   hide = true;
 
@@ -30,22 +30,13 @@ export class LoginComponent implements OnInit {
 
   }
 
-  handleLoginOnClickSignInBtn() {
+  onSignInButtonClicked() {
 
+    this.isLoginValid = true;
+    this.errorMessage = '';
 
-    if (!MymUtil.isEmailIdValid(this.emailId.trim())) {
-
-      this.isEmailValid = false;
-    } else {
-      this.isEmailValid = true;
-    }
-
-    if (!MymUtil.isStringValid(this.password.trim())) {
-
-      this.isPasswordValid = false;
-    } else {
-      this.isPasswordValid = true;
-    }
+    this.isEmailValid = MymUtil.isStringValid(this.emailId) && MymUtil.isEmailIdValid(this.emailId.trim());
+    this.isPasswordValid = MymUtil.isStringValid(this.password) && MymUtil.isPasswordValid(this.password.trim());
 
     if (this.isEmailValid && this.isPasswordValid) {
 
@@ -65,17 +56,17 @@ export class LoginComponent implements OnInit {
 
             if (response.status == 200) {
 
-              this.isLoginInvalid = false;
+              this.isLoginValid = true;
               this.router.navigate(['/expense-categories'])
             } else {
-              this.isLoginInvalid = false;
+              this.isLoginValid = false;
               this.errorMessage = "Something went wrong!!"
             }
 
           },
           error: (error) => {
 
-            this.isLoginInvalid = false;
+            this.isLoginValid = false;
 
             this.errorMessage = "Error while Login: " + error.message;
 
@@ -88,6 +79,10 @@ export class LoginComponent implements OnInit {
           }
         }
       )
+    } else {
+
+      this.isLoginValid = false;
+      this.errorMessage = !this.isEmailValid ? "Email not valid" : "Password should be at least 8 character, should contain a letter, a digit and a special character (!@#$%^&*)";
     }
   }
 

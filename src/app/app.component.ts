@@ -7,18 +7,25 @@ import {Component} from '@angular/core';
 })
 export class AppComponent {
 
-  name = 'manage-your-money-frontend';
+  title = 'manage-your-money-frontend';
 
-  donNotShowHeaderList = [
+  doNotShowHeaderList = [
     '_LoginComponent',
     '_ForgotPasswordComponent',
-    '_RegisterUserComponent'
+    '_RegisterUserComponent',
+  ];
+
+  doNotShowMenuButtons: string[] = [
+    '_AddEditExpenseCategoryComponent'
   ]
 
   shouldShowHeaderComponent = false;
+  shouldShowMenuButtons = false;
 
   onActivate(event: any) {
 
-    this.shouldShowHeaderComponent = !this.donNotShowHeaderList.includes(event.constructor.name);
+    console.log(event.constructor.name);
+    this.shouldShowHeaderComponent = !this.doNotShowHeaderList.includes(event.constructor.name);
+    this.shouldShowMenuButtons = !this.doNotShowMenuButtons.includes(event.constructor.name);
   }
 }

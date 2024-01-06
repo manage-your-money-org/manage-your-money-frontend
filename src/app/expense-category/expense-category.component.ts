@@ -8,6 +8,9 @@ import {MymApiResponse} from "../shared/models/response/MymApiResponse";
 import {ExpenseService} from "../services/expense/expense.service";
 import {DateUtil} from "../shared/util/DateUtil";
 import {FilterRequest} from "../shared/models/request/FilterRequest";
+import {MatDialog} from "@angular/material/dialog";
+import {DeleteDialogComponent} from "../delete-dialog/delete-dialog.component";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-expense-category',
@@ -23,14 +26,15 @@ export class ExpenseCategoryComponent implements OnInit {
 
   isError = false;
   errorMessage = '';
-  isLoading = false;
+  isLoading = true;
 
   totalPages = 0;
   isLastPage = false;
 
   selectedItem: ExpenseCategoryResponse;
 
-  constructor(private router: Router, private expenseCategoryService: ExpenseCategoryService, private expenseService: ExpenseService) {
+  constructor(private router: Router, private expenseCategoryService: ExpenseCategoryService,
+              private expenseService: ExpenseService, private dialog: MatDialog, private _snackbar: MatSnackBar) {
   }
 
   selectItem(item: ExpenseCategoryResponse) {
@@ -47,10 +51,13 @@ export class ExpenseCategoryComponent implements OnInit {
   onScroll() {
 
     console.log("On scrolled")
+    this.isLoading = true;
 
     if (!this.isLastPage) {
       this.currentPage++;
       this.getExpenseCategories();
+    } else {
+      this.isLoading = false;
     }
   }
 
@@ -66,14 +73,43 @@ export class ExpenseCategoryComponent implements OnInit {
 
   navigateToAddExpenseCategory() {
 
-    // todo: navigate to add-edit-expense-category-component for adding new category
-    this.router.navigate(["add-edit-expense-category", ""])
+    this.router.navigate(["add-edit-expense-category", "add"])
   }
 
   navigateToEditExpenseCategory() {
 
-    // todo: navigate to add-edit-expense-category-component for editing existing category
     this.router.navigate(["add-edit-expense-category", this.selectedItem.key])
+  }
+
+  deleteExpenseCategory() {
+
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {
+      data: "This will delete this category and it's expenses."
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+      console.log(`Dialog result: ${result}`);
+
+      if (result) {
+
+        this.expenseCategoryService.deleteExpenseCategoryByKey(
+          this.selectedItem.key
+        ).subscribe((response) => {
+
+          if (response.status === 204) {
+
+            this._snackbar.open("Category deleted successfully", '', {
+              duration: 5000
+            });
+
+            this.expenseCategoryList.splice(this.expenseCategoryList.indexOf(this.selectedItem), 1);
+          } else {
+            this._snackbar.open("Something went wrong!", '', {duration: 5000})
+          }
+        });
+      }
+    });
   }
 
   private getExpenseCategories() {
@@ -89,6 +125,9 @@ export class ExpenseCategoryComponent implements OnInit {
           this.isError = false;
           this.pageableResponse = response.body.body;
           this.isLastPage = this.pageableResponse.last;
+
+          if (this.isLastPage)
+            this.isLoading = false;
 
           this.expenseCategoryList = [...this.expenseCategoryList, ...this.pageableResponse.content]
 
@@ -117,15 +156,14 @@ export class ExpenseCategoryComponent implements OnInit {
         }
         console.log("Category list: " + this.expenseCategoryList.length);
         console.log("Category content list: " + this.pageableResponse.content.length);
+
+        this.toggleLoading();
       },
 
       error: (error) => {
 
         this.isError = true;
         this.errorMessage = "Unable to fetch expense categories - \nstatus: " + error.status + "\nmessage: " + (error.error.message === null || error.error.message === '') ? error.message : error.error.message;
-      },
-      complete: () => {
-        this.toggleLoading();
       }
     });
   }
