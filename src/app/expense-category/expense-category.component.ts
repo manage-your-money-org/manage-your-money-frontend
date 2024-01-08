@@ -20,7 +20,6 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 export class ExpenseCategoryComponent implements OnInit {
 
   expenseCategoryList: ExpenseCategoryResponse[] = [];
-  pageableResponse: PageableResponse<ExpenseCategoryResponse>;
   currentPage = 0;
   pageSize = 10;
 
@@ -28,7 +27,6 @@ export class ExpenseCategoryComponent implements OnInit {
   errorMessage = '';
   isLoading = true;
 
-  totalPages = 0;
   isLastPage = false;
 
   selectedItem: ExpenseCategoryResponse;
@@ -123,13 +121,10 @@ export class ExpenseCategoryComponent implements OnInit {
         if (response.status === 200) {
 
           this.isError = false;
-          this.pageableResponse = response.body.body;
-          this.isLastPage = this.pageableResponse.last;
+          const pageableResponse = response.body.body;
+          this.isLastPage = pageableResponse.last;
 
-          if (this.isLastPage)
-            this.isLoading = false;
-
-          this.expenseCategoryList = [...this.expenseCategoryList, ...this.pageableResponse.content]
+          this.expenseCategoryList = [...this.expenseCategoryList, ...pageableResponse.content]
 
           if (this.currentPage === 0 && this.expenseCategoryList.length !== 0) {
 
@@ -155,9 +150,12 @@ export class ExpenseCategoryComponent implements OnInit {
           }
         }
         console.log("Category list: " + this.expenseCategoryList.length);
-        console.log("Category content list: " + this.pageableResponse.content.length);
 
-        this.toggleLoading();
+        if (this.isLastPage) {
+          this.isLoading = false;
+        } else {
+          this.toggleLoading();
+        }
       },
 
       error: (error) => {

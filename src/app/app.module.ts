@@ -28,6 +28,7 @@ import {AddEditExpenseCategoryComponent} from './add-edit-expense-category/add-e
 import {UnsplashImageItemComponent} from './unsplash-image-item/unsplash-image-item.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {DeleteDialogComponent} from './delete-dialog/delete-dialog.component';
+import {ExpenseComponent} from './expense/expense.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import {DeleteDialogComponent} from './delete-dialog/delete-dialog.component';
     ExpenseCategoryItemComponent,
     AddEditExpenseCategoryComponent,
     UnsplashImageItemComponent,
-    DeleteDialogComponent
+    DeleteDialogComponent,
+    ExpenseComponent
   ],
   imports: [
     BrowserModule,

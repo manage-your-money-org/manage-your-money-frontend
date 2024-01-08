@@ -6,6 +6,7 @@ import {UserComponent} from "./user/user.component";
 import {IsAllowed} from "./services/router-guard.service";
 import {ExpenseCategoryComponent} from "./expense-category/expense-category.component";
 import {AddEditExpenseCategoryComponent} from "./add-edit-expense-category/add-edit-expense-category.component";
+import {ExpenseComponent} from "./expense/expense.component";
 
 const routes: Routes = [
   {path: '', component: ExpenseCategoryComponent, canActivate: [IsAllowed]},
@@ -14,7 +15,8 @@ const routes: Routes = [
   // {path: 'forgot-password', component: ForgotPasswordComponent},
   {path: 'user', component: UserComponent, canActivate: [IsAllowed]},
   {path: 'expense-categories', component: ExpenseCategoryComponent, canActivate: [IsAllowed]},
-  {path: 'add-edit-expense-category/:key', component: AddEditExpenseCategoryComponent, canActivate: [IsAllowed]}
+  {path: 'add-edit-expense-category/:key', component: AddEditExpenseCategoryComponent, canActivate: [IsAllowed]},
+  {path: 'expenses/:expenseCategoryKey', component: ExpenseComponent, canActivate: [IsAllowed]}
 ];
 
 @NgModule({

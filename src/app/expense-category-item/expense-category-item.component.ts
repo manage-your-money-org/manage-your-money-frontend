@@ -3,6 +3,7 @@ import {ExpenseCategoryResponse} from "../shared/models/response/ExpenseCategory
 import {ExpenseService} from "../services/expense/expense.service";
 import {FilterRequest} from "../shared/models/request/FilterRequest";
 import {DateUtil} from "../shared/util/DateUtil";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-expense-category-item',
@@ -15,7 +16,7 @@ export class ExpenseCategoryItemComponent {
     @Input() isSelected: boolean
     @Output() itemSelected = new EventEmitter<ExpenseCategoryResponse>();
 
-    constructor(private expenseService: ExpenseService) {
+  constructor(private expenseService: ExpenseService, private router: Router) {
     }
 
     onItemClick() {
@@ -49,6 +50,8 @@ export class ExpenseCategoryItemComponent {
 
   navigateToExpensePage() {
 
-    // send this.expenseCategoryItem.key as parameter
+    console.log("Navigate to expenses page")
+    //todo: send this.expenseCategoryItem.key as parameter
+    this.router.navigate(['expenses', this.expenseCategoryItem.key]);
   }
 }
