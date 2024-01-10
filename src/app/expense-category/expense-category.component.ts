@@ -71,12 +71,12 @@ export class ExpenseCategoryComponent implements OnInit {
 
   navigateToAddExpenseCategory() {
 
-    this.router.navigate(["add-edit-expense-category", "add"])
+    this.router.navigate(["expense-categories", "add"])
   }
 
   navigateToEditExpenseCategory() {
 
-    this.router.navigate(["add-edit-expense-category", this.selectedItem.key])
+    this.router.navigate(["expense-categories", this.selectedItem.key])
   }
 
   deleteExpenseCategory() {

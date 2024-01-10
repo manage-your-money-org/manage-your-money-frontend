@@ -230,6 +230,10 @@ body {
   width: 400px;
 }
 
+.search-bar-for-image-searching {
+  margin-top: 30px;
+}
+
 .search-bar-for-image-searching input {
   width: 400px;
   outline: none;
@@ -528,7 +532,7 @@ body {
   caret-color: transparent;
 }
 
-.add-expense-category-button {
+.add-button {
 
   width: 150px;
   height: 50px;
@@ -548,11 +552,11 @@ body {
   align-items: center;
 }
 
-.add-expense-category-button:hover {
+.add-button:hover {
   width: 140px;
 }
 
-.add-expense-category-button > span {
+.add-button > span {
 
   font-size: 15px;
   color: white;
@@ -657,4 +661,3 @@ body {
   text-align: center;
   font-family: Bahnschrift, serif;
 }
-

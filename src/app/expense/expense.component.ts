@@ -102,4 +102,14 @@ export class ExpenseComponent implements OnInit {
 
     return paymentMethodsString;
   }
+
+  navigateToAddExpensePage() {
+
+    this.router.navigate(['expense-categories', this.receivedCategoryKey, "expenses", "add"]);
+  }
+
+  navigateToEditExpensePage(expense: ExpenseResponse) {
+
+    this.router.navigate(['expense-categories', this.receivedCategoryKey, "expenses", expense.key]);
+  }
 }

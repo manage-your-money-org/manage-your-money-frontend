@@ -2,7 +2,7 @@
 
   <div class="bigger-side-container">
 
-    <div class="search-results"
+    <div *ngIf="expenseCategoryList.length !== 0" class="search-results"
          infiniteScroll
          [infiniteScrollDistance]="2"
          [infiniteScrollThrottle]="1000"
@@ -10,12 +10,6 @@
          [scrollWindow]="false">
 
       <div class="item-container">
-
-        <!--                <div class="section-header-container">-->
-
-        <!--                    <span>All Expense Categories</span>-->
-
-        <!--                </div>-->
 
         <app-expense-category-item
           *ngFor="let item of expenseCategoryList; trackBy: trackByFn"
@@ -28,18 +22,30 @@
 
       <mat-progress-bar *ngIf="isLoading" style="padding: 10px; margin: 10px" mode="indeterminate"></mat-progress-bar>
 
-      <div (click)="navigateToAddExpenseCategory()" class="add-expense-category-button">
-
-        <mat-icon matPrefix style="color:white;margin-right: 3px">add</mat-icon>
-        <span>Add Category</span>
-      </div>
-
     </div>
 
+    <div (click)="navigateToAddExpenseCategory()" class="add-button">
+
+      <mat-icon matPrefix style="color:white;margin-right: 3px">add</mat-icon>
+      <span>Add Category</span>
+    </div>
 
   </div>
 
-  <div class="smaller-side-container" style="background-color: #CCCCCC">
+  <div *ngIf="expenseCategoryList.length === 0 && !isError" class="center">
+
+    <span>Please click on Add Category button for adding a new category.</span>
+
+  </div>
+
+  <div *ngIf="isError" class="center">
+
+    <span>{{errorMessage}}</span>
+
+  </div>
+
+
+  <div *ngIf="expenseCategoryList.length !== 0" class="smaller-side-container" style="background-color: #CCCCCC">
 
     <div class="category-detail-container">
 

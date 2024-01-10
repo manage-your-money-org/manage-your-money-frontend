@@ -50,8 +50,6 @@ export class ExpenseCategoryItemComponent {
 
   navigateToExpensePage() {
 
-    console.log("Navigate to expenses page")
-    //todo: send this.expenseCategoryItem.key as parameter
-    this.router.navigate(['expenses', this.expenseCategoryItem.key]);
+    this.router.navigate(['expense-categories', this.expenseCategoryItem.key, "expenses"]);
   }
 }
