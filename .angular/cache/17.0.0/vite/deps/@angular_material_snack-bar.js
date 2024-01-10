@@ -1,4 +1,8 @@
 import {
+  MatButton,
+  MatButtonModule
+} from "./chunk-IGFTJBUQ.js";
+import {
   BasePortalOutlet,
   CdkPortalOutlet,
   ComponentPortal,
@@ -9,10 +13,6 @@ import {
   TemplatePortal
 } from "./chunk-R5W5DZDC.js";
 import "./chunk-ZXCGRVVI.js";
-import {
-  MatButton,
-  MatButtonModule
-} from "./chunk-IGFTJBUQ.js";
 import {
   BreakpointObserver,
   Breakpoints,
