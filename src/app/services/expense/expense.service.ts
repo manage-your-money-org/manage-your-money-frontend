@@ -71,8 +71,8 @@ export class ExpenseService {
       throw new Error("Please add expense key in the request");
     }
 
-    return this.httpClient.post<MymApiResponse<ExpenseResponse>>(
-      `${this.baseUrl}/new/create`, expenseRequest, {
+    return this.httpClient.put<MymApiResponse<ExpenseResponse>>(
+      `${this.baseUrl}/update`, expenseRequest, {
         observe: "response",
         withCredentials: true,
         headers: MymUtil.getHeaders()

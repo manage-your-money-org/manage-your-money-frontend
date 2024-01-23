@@ -7,7 +7,7 @@ import {IsAllowed} from "./services/router-guard.service";
 import {ExpenseCategoryComponent} from "./expense-category/expense-category.component";
 import {AddEditExpenseCategoryComponent} from "./add-edit-expense-category/add-edit-expense-category.component";
 import {ExpenseComponent} from "./expense/expense.component";
-import {AddEditExpenseComponent} from "./add-edit-expense/add-edit-expense.component";
+
 
 const routes: Routes = [
   {path: '', component: ExpenseCategoryComponent, canActivate: [IsAllowed]},
@@ -18,11 +18,7 @@ const routes: Routes = [
   {path: 'expense-categories', component: ExpenseCategoryComponent, canActivate: [IsAllowed]},
   {path: 'expense-categories/:key', component: AddEditExpenseCategoryComponent, canActivate: [IsAllowed]},
   {path: 'expense-categories/:expenseCategoryKey/expenses', component: ExpenseComponent, canActivate: [IsAllowed]},
-  {
-    path: 'expense-categories/:expenseCategoryKey/expenses/:key',
-    component: AddEditExpenseComponent,
-    canActivate: [IsAllowed]
-  }
+  //{path: 'expense-categories/:expenseCategoryKey/expenses/:key', component: AddEditExpenseComponent, canActivate: [IsAllowed]}
 ];
 
 @NgModule({

@@ -661,3 +661,28 @@ body {
   text-align: center;
   font-family: Bahnschrift, serif;
 }
+
+.date-time-input-container {
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.date-time-input-container > label {
+  text-align: start;
+  font-size: 12px;
+  padding: 5px;
+  color: #0687FF;
+}
+
+input[type=datetime-local] {
+  width: 90%;
+  padding: 15px;
+  background-color: #ffffff;
+  margin-bottom: 15px;
+  font-size: 15px;
+  border-width: .5px;
+  border-radius: 5px;
+  border-color: #f2f2f2;
+}

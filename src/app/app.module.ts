@@ -3,7 +3,7 @@ import {BrowserModule, provideClientHydration} from '@angular/platform-browser';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {LoginComponent} from './login/login.component';
 import {HttpClientModule} from "@angular/common/http";
 import {ExpenseCategoryComponent} from './expense-category/expense-category.component';
@@ -30,6 +30,9 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {DeleteDialogComponent} from './delete-dialog/delete-dialog.component';
 import {ExpenseComponent} from './expense/expense.component';
 import {AddEditExpenseComponent} from './add-edit-expense/add-edit-expense.component';
+import {ExpensePaymentMethodItemComponent} from './expense-payment-method-item/expense-payment-method-item.component';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [
@@ -44,7 +47,8 @@ import {AddEditExpenseComponent} from './add-edit-expense/add-edit-expense.compo
     UnsplashImageItemComponent,
     DeleteDialogComponent,
     ExpenseComponent,
-    AddEditExpenseComponent
+    AddEditExpenseComponent,
+    ExpensePaymentMethodItemComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +59,8 @@ import {AddEditExpenseComponent} from './add-edit-expense/add-edit-expense.compo
     NgOptimizedImage,
     BrowserAnimationsModule,
     MatIconModule, MatInputModule, MatFormFieldModule, MatCardModule, MatButtonModule, MatDividerModule,
-    MatListModule, MatRippleModule, MatDialogModule, MatToolbarModule, MatProgressBarModule
+    MatListModule, MatRippleModule, MatDialogModule, MatToolbarModule, MatProgressBarModule, MatChipsModule,
+    MatAutocompleteModule, ReactiveFormsModule
   ],
   providers: [
     provideClientHydration()

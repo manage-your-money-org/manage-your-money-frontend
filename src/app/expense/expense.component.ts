@@ -4,6 +4,10 @@ import {ExpenseService} from "../services/expense/expense.service";
 import {ExpenseResponse} from "../shared/models/response/ExpenseResponse";
 import {FilterRequest} from "../shared/models/request/FilterRequest";
 import {PaymentMethod} from "../shared/models/response/PaymentMethod";
+import {MatDialog} from "@angular/material/dialog";
+import {AddEditExpenseComponent} from "../add-edit-expense/add-edit-expense.component";
+import {DialogData} from "../shared/models/DialogData";
+import {EXPENSE_CATEGORY_KEY_KEY, EXPENSE_KEY_KEY} from "../shared/constants";
 
 @Component({
   selector: 'app-expense',
@@ -21,7 +25,10 @@ export class ExpenseComponent implements OnInit {
   isLoading = true;
   isLastPage = false;
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute, private expenseService: ExpenseService) {
+  constructor(private router: Router,
+              private activatedRoute: ActivatedRoute,
+              private expenseService: ExpenseService,
+              private matDialog: MatDialog) {
   }
 
   toggleLoading = () => this.isLoading = !this.isLoading;
@@ -105,11 +112,37 @@ export class ExpenseComponent implements OnInit {
 
   navigateToAddExpensePage() {
 
-    this.router.navigate(['expense-categories', this.receivedCategoryKey, "expenses", "add"]);
+    //this.router.navigate(['expense-categories', this.receivedCategoryKey, "expenses", "add"]);
+
+    const dialogData: DialogData = {
+      map: new Map<string, any>()
+        .set(EXPENSE_CATEGORY_KEY_KEY, this.receivedCategoryKey)
+        .set(EXPENSE_KEY_KEY, "add")
+    };
+
+    this.matDialog.open(AddEditExpenseComponent, {
+      data: dialogData,
+      width: "500px",
+      maxHeight: "600px"
+    });
   }
 
   navigateToEditExpensePage(expense: ExpenseResponse) {
 
-    this.router.navigate(['expense-categories', this.receivedCategoryKey, "expenses", expense.key]);
+    //this.router.navigate(['expense-categories', this.receivedCategoryKey, "expenses", expense.key]);
+
+    const dialogData: DialogData = {
+      map: new Map<string, any>()
+        .set(EXPENSE_CATEGORY_KEY_KEY, this.receivedCategoryKey)
+        .set(EXPENSE_KEY_KEY, expense.key)
+    };
+
+    this.matDialog.open(AddEditExpenseComponent, {
+      data: dialogData,
+      width: "500px",
+      height: "600px"
+    });
+
+    // todo: subscribe to dialog close event edit the expense List
   }
 }

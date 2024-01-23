@@ -9,7 +9,7 @@ export interface ExpenseResponse {
   spentOn: string,
   uid: string,
   key: string,
-  expenseDate: 0,
+  expenseDate: number,
   category: ExpenseCategoryResponse,
   paymentMethods: PaymentMethod[]
 }

@@ -1,38 +1,77 @@
-<div style="display: flex;" class="page-below-toolbar">
+<div class="form-container">
 
-  <div class="form-container">
-
-    <div class="signIn-signUp-header">
-      <span><u style="caret-color: transparent;">{{ key.trim() !== 'add' ? 'Edit' : 'Add' }} Category</u></span>
-    </div>
-
-    <form>
-
-      <br>
-      <mat-form-field class="input-full-width">
-        <mat-label>Category name</mat-label>
-        <input matInput #category_name maxlength="60" placeholder="Ex. Shopping" name="categoryName"
-               required>
-        <mat-hint align="end">{{ category_name.value.length }} / 60</mat-hint>
-      </mat-form-field>
-
-      <mat-form-field class="input-full-width">
-
-        <mat-label>Category description</mat-label>
-        <textarea matInput #category_description maxlength="250" name="categoryDescription"
-                  style="min-height: 50px"></textarea>
-        <mat-hint align="end">{{ category_description.value.length }} / 250</mat-hint>
-      </mat-form-field>
-
-      <!--      <span *ngIf="errorMessage !== ''" class="form-error">{{errorMessage}}</span>-->
-
-      <div style="width: 100%; display: flex; justify-content: center;">
-        <mat-card matRipple class="submit-button">
-          <div><span>Submit</span></div>
-        </mat-card>
-      </div>
-
-    </form>
+  <div class="signIn-signUp-header">
+    <span><u style="caret-color: transparent;">{{ key.trim() !== 'add' ? 'Edit' : 'Add' }} Expense</u></span>
   </div>
 
+  <form>
+
+    <br>
+
+    <div class="date-time-input-container">
+      <label>Expense date</label>
+      <input type="datetime-local"
+             [value]="formattedExpenseDate"
+             [(ngModel)]="formattedExpenseDate"
+             name="formattedExpenseDate"
+             required>
+    </div>
+
+    <mat-form-field appearance="outline" class="input-full-width">
+      <mat-label>Amount</mat-label>
+      <input type="number" min="0.01" step="0.00001" matInput maxlength="10" placeholder="Amount" name="expense_amount"
+             required oninput="validity.valid||(value='')" [(ngModel)]="expenseAmount">
+      <!-- <mat-hint align="end">{{ expense_amount.value.length }} / 10</mat-hint> -->
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="input-full-width">
+
+      <mat-label>Spent On</mat-label>
+      <textarea matInput #spent_on maxlength="250" name="spent_on"
+                style="min-height: 50px" [(ngModel)]="spentOn"></textarea>
+      <mat-hint align="end">{{ spent_on.value.length }} / 250</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="input-full-width">
+      <mat-label>Payment Methods</mat-label>
+      <mat-chip-grid #chipGrid aria-label="Payment Method selection">
+        @for (pm of selectedPaymentMethods; track pm) {
+          <mat-chip-row (removed)="remove(pm)">
+            {{ pm }}
+            <button matChipRemove [attr.aria-label]="'remove ' + pm">
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip-row>
+        }
+      </mat-chip-grid>
+      <input placeholder="New Payment Method..." #paymentMethodInput [formControl]="paymentMethodCtrl"
+             [matChipInputFor]="chipGrid" [matAutocomplete]="auto"
+             [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+             (matChipInputTokenEnd)="add($event)"/>
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+        @for (pm of filteredPaymentMethods | async; track pm) {
+          <mat-option [value]="pm">{{ pm }}</mat-option>
+        }
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <!--    <div class="add-expense-payment-method-container">-->
+
+    <!--      <app-expense-payment-method-item-->
+    <!--        [paymentMethods]="paymentMethods"-->
+    <!--        (selectedPaymentMethodChange)="onSelectedPaymentMethodChange($event)"-->
+    <!--      >-->
+
+    <!--      </app-expense-payment-method-item>-->
+    <!--      -->
+
+    <!--    </div>-->
+
+    <div style="width: 100%; display: flex; justify-content: center; margin-bottom: 20px" (click)="saveChanges()">
+      <mat-card matRipple class="submit-button">
+        <div><span>Submit</span></div>
+      </mat-card>
+    </div>
+
+  </form>
 </div>

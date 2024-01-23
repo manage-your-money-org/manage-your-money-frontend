@@ -3,8 +3,8 @@ export interface ExpenseRequest {
   spentOn: string,
   expenseDate: number,
   categoryKey: string,
-  paymentMethodsKeys: string[],
+  paymentMethodsKeys?: string[],
   newPaymentMethod: string[],
 
-  key: string // only for update
+  key?: string // only for update
 }
