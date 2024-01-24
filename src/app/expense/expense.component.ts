@@ -8,6 +8,8 @@ import {MatDialog} from "@angular/material/dialog";
 import {AddEditExpenseComponent} from "../add-edit-expense/add-edit-expense.component";
 import {DialogData} from "../shared/models/DialogData";
 import {EXPENSE_CATEGORY_KEY_KEY, EXPENSE_KEY_KEY} from "../shared/constants";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {DeleteDialogComponent} from "../delete-dialog/delete-dialog.component";
 
 @Component({
   selector: 'app-expense',
@@ -28,7 +30,9 @@ export class ExpenseComponent implements OnInit {
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute,
               private expenseService: ExpenseService,
-              private matDialog: MatDialog) {
+              private matDialog: MatDialog,
+              private _snackbar: MatSnackBar
+  ) {
   }
 
   toggleLoading = () => this.isLoading = !this.isLoading;
@@ -67,7 +71,7 @@ export class ExpenseComponent implements OnInit {
       filterRequest,
       this.currentPage,
       this.pageSize,
-      "created,desc"
+      "expenseDate,desc"
     ).subscribe({
       next: (response) => {
 
@@ -120,10 +124,17 @@ export class ExpenseComponent implements OnInit {
         .set(EXPENSE_KEY_KEY, "add")
     };
 
-    this.matDialog.open(AddEditExpenseComponent, {
+    const dialogRef = this.matDialog.open(AddEditExpenseComponent, {
       data: dialogData,
       width: "500px",
       maxHeight: "600px"
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+      const expenseResponse = result as ExpenseResponse;
+      this.expenseList.push(expenseResponse);
+      this.expenseList.sort((e1, e2) => e2.expenseDate - e1.expenseDate)
     });
   }
 
@@ -137,12 +148,54 @@ export class ExpenseComponent implements OnInit {
         .set(EXPENSE_KEY_KEY, expense.key)
     };
 
-    this.matDialog.open(AddEditExpenseComponent, {
+    const dialogRef = this.matDialog.open(AddEditExpenseComponent, {
       data: dialogData,
       width: "500px",
       height: "600px"
     });
 
-    // todo: subscribe to dialog close event edit the expense List
+    dialogRef.afterClosed().subscribe(result => {
+
+      const expenseResponse = result as ExpenseResponse;
+
+      const expenseIndex = this.expenseList.findIndex(obj => obj.key === expense.key);
+
+      if (expenseIndex !== -1) {
+        this.expenseList[expenseIndex] = {...this.expenseList[expenseIndex], ...expenseResponse}
+        this.expenseList.sort((e1, e2) => e2.expenseDate - e1.expenseDate)
+      }
+    });
+  }
+
+  deleteExpense(expense: ExpenseResponse) {
+
+    const dialogRef = this.matDialog.open(DeleteDialogComponent, {
+      data: "This will delete this category and it's expenses."
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+      console.log(`Dialog result: ${result}`);
+
+      if (result) {
+
+        this.expenseService.deleteExpense(
+          expense.key
+        ).subscribe((response) => {
+
+          if (response.status === 204) {
+
+            this._snackbar.open("Expense deleted successfully", '', {
+              duration: 5000
+            });
+
+            this.expenseList.splice(this.expenseList.indexOf(expense), 1);
+          } else {
+            this._snackbar.open("Something went wrong!", '', {duration: 5000})
+          }
+        });
+      }
+    });
+
   }
 }

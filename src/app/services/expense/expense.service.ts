@@ -87,6 +87,7 @@ export class ExpenseService {
 
     return this.httpClient.delete(
       `${this.baseUrl}/key`, {
+        observe: "response",
         params: params,
         headers: MymUtil.getHeaders(),
         withCredentials: true

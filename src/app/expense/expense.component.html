@@ -54,7 +54,8 @@
               <mat-icon>drive_file_move</mat-icon>
             </button>
 
-            <button class="expense-item-icon" mat-icon-button aria-label="Delete" color="warn">
+            <button (click)="deleteExpense(expense)" class="expense-item-icon" mat-icon-button aria-label="Delete"
+                    color="warn">
               <mat-icon>delete</mat-icon>
             </button>
 

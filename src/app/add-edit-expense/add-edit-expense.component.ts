@@ -17,6 +17,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {EXPENSE_CATEGORY_KEY_KEY, EXPENSE_KEY_KEY} from "../shared/constants";
 import {ExpenseRequest} from "../shared/models/request/ExpenseRequest";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {ExpenseCategoryResponse} from "../shared/models/response/ExpenseCategoryResponse";
 
 @Component({
   selector: 'app-add-edit-expense',
@@ -36,6 +37,7 @@ export class AddEditExpenseComponent implements OnInit {
   announcer = inject(LiveAnnouncer)
 
   receivedExpenseCategoryKey: string = '';
+  receivedExpenseCategory: ExpenseCategoryResponse;
   isForEditing: boolean = false;
   expense: ExpenseResponse = {} as ExpenseResponse;
   key: string = '';
@@ -155,8 +157,6 @@ export class AddEditExpenseComponent implements OnInit {
     console.log("paymentMethods: " + [...this.selectedPaymentMethods].join(', '));
     console.log("isForEditing: " + this.isForEditing);
 
-    this.dialogRef.close();
-
     if (this.isForEditing) {
 
       // update the changes
@@ -179,7 +179,8 @@ export class AddEditExpenseComponent implements OnInit {
             duration: 5000
           });
 
-          this.updateExpenseCategory()
+          this.updateExpenseCategory();
+          this.dialogRef.close(response.body.body);
 
         } else {
           // show toast
@@ -210,6 +211,7 @@ export class AddEditExpenseComponent implements OnInit {
           });
 
           this.updateExpenseCategory();
+          this.dialogRef.close(response.body.body);
 
         } else {
           // show toast
