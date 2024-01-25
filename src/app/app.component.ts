@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -8,6 +9,9 @@ import {Component} from '@angular/core';
 export class AppComponent {
 
   title = 'manage-your-money-frontend';
+
+  constructor(private router: Router) {
+  }
 
   doNotShowHeaderList = [
     '_LoginComponent',
@@ -27,5 +31,9 @@ export class AppComponent {
     console.log(event.constructor.name);
     this.shouldShowHeaderComponent = !this.doNotShowHeaderList.includes(event.constructor.name);
     this.shouldShowMenuButtons = !this.doNotShowMenuButtons.includes(event.constructor.name);
+  }
+
+  onHeaderTitleClicked() {
+    this.router.navigate([""]);
   }
 }

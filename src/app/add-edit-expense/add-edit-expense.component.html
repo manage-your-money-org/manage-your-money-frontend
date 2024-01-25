@@ -19,7 +19,7 @@
 
     <mat-form-field appearance="outline" class="input-full-width">
       <mat-label>Amount</mat-label>
-      <input type="number" min="0.01" step="0.00001" matInput maxlength="10" placeholder="Amount" name="expense_amount"
+      <input type="number" min="0.001" step="0.001" matInput maxlength="10" placeholder="Amount" name="expense_amount"
              required oninput="validity.valid||(value='')" [(ngModel)]="expenseAmount">
       <!-- <mat-hint align="end">{{ expense_amount.value.length }} / 10</mat-hint> -->
     </mat-form-field>
@@ -67,9 +67,9 @@
 
     <!--    </div>-->
 
-    <div style="width: 100%; display: flex; justify-content: center; margin-bottom: 20px" (click)="saveChanges()">
+    <div style="width: 100%; display: flex; justify-content: center; margin-bottom: 20px">
       <mat-card matRipple class="submit-button">
-        <div><span>Submit</span></div>
+        <div><span (click)="saveChanges()">Submit</span></div>
       </mat-card>
     </div>
 

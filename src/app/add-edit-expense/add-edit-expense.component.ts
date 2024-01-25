@@ -14,10 +14,9 @@ import {MatChipInputEvent} from "@angular/material/chips";
 import {MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
 import {DialogData} from "../shared/models/DialogData";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {EXPENSE_CATEGORY_KEY_KEY, EXPENSE_KEY_KEY} from "../shared/constants";
+import {DUPLICATE_EXPENSE_KEY, EXPENSE_CATEGORY_KEY_KEY, EXPENSE_KEY_KEY} from "../shared/constants";
 import {ExpenseRequest} from "../shared/models/request/ExpenseRequest";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {ExpenseCategoryResponse} from "../shared/models/response/ExpenseCategoryResponse";
 
 @Component({
   selector: 'app-add-edit-expense',
@@ -37,8 +36,8 @@ export class AddEditExpenseComponent implements OnInit {
   announcer = inject(LiveAnnouncer)
 
   receivedExpenseCategoryKey: string = '';
-  receivedExpenseCategory: ExpenseCategoryResponse;
   isForEditing: boolean = false;
+  isForDuplicate: boolean = false;
   expense: ExpenseResponse = {} as ExpenseResponse;
   key: string = '';
   formattedExpenseDate: string;
@@ -77,11 +76,23 @@ export class AddEditExpenseComponent implements OnInit {
 
     this.receivedExpenseCategoryKey = this.data.map.get(EXPENSE_CATEGORY_KEY_KEY);
     this.key = this.data.map.get(EXPENSE_KEY_KEY);
+    const duplicateExpense = this.data.map.get(DUPLICATE_EXPENSE_KEY) as ExpenseResponse;
 
     // this.receivedExpenseCategory = this.activatedRoute.snapshot.params["expenseCategoryKey"];
     // this.key = this.activatedRoute.snapshot.params["key"];
 
-    if (this.key !== 'add') {
+    if (this.key === 'add') {
+
+      this.isForEditing = false;
+      this.selectedPaymentMethods = new Set<string>(["CASH"]);
+
+    } else if (this.key === 'duplicate') {
+
+      this.isForDuplicate = true;
+      this.expense = duplicateExpense;
+      this.initUI();
+
+    } else {
 
       this.isForEditing = true;
 
@@ -90,19 +101,138 @@ export class AddEditExpenseComponent implements OnInit {
         if (response.status === 200) {
 
           this.expense = response.body;
-          this.expenseAmount = this.expense.amount;
-          this.spentOn = this.expense.spentOn;
-          this.selectedPaymentMethods = new Set<string>(this.expense.paymentMethods.map(pm => pm.paymentMethodName));
-          this.updateExpenseDateAndTime(new Date(this.expense.expenseDate));
+          this.initUI();
         }
       });
-    } else {
-
-      this.isForEditing = false;
-      this.selectedPaymentMethods = new Set<string>(["CASH"]);
     }
   }
 
+  private initUI() {
+
+    if (this.expense) {
+      this.expenseAmount = this.expense.amount;
+      this.spentOn = this.expense.spentOn;
+      this.selectedPaymentMethods = new Set<string>(this.expense.paymentMethods.map(pm => pm.paymentMethodName));
+      this.updateExpenseDateAndTime(this.isForEditing ? new Date(this.expense.expenseDate) : new Date());
+    }
+  }
+
+  // -----------------------------------------
+  saveChanges() {
+
+    console.log("formattedExpenseDate: " + this.formattedExpenseDate);
+    console.log("amount: " + this.expenseAmount);
+    console.log("spentOn: " + this.spentOn);
+    console.log("paymentMethods: " + [...this.selectedPaymentMethods].join(', '));
+    console.log("isForEditing: " + this.isForEditing);
+
+    const expenseRequest: ExpenseRequest = {
+      amount: this.expenseAmount,
+      spentOn: this.spentOn,
+      expenseDate: new Date(this.formattedExpenseDate).getTime(),
+      categoryKey: this.receivedExpenseCategoryKey,
+      paymentMethodsKeys: [],
+      newPaymentMethod: [...this.selectedPaymentMethods]
+    }
+
+    if (this.isForEditing) {
+
+      expenseRequest.key = this.expense.key;
+
+      this.updateExpense(expenseRequest);
+
+    } else {
+
+      this.createExpense(expenseRequest);
+    }
+
+  }
+
+  private updateExpense(expenseRequest: ExpenseRequest) {
+
+    this.expenseService.updateExpense(expenseRequest).subscribe((response) => {
+
+      if (response.status === 200) {
+
+        // show toast
+        this._snackbar.open("Expense Updated", '', {
+          duration: 5000
+        });
+
+        this.updateExpenseCategory();
+        this.dialogRef.close(response.body.body);
+
+      } else {
+        // show toast
+        this._snackbar.open("Something went wrong", '', {
+          duration: 5000
+        });
+      }
+    });
+  }
+
+  private createExpense(expenseRequest: ExpenseRequest) {
+
+    this.expenseService.createNewExpense(expenseRequest).subscribe((response) => {
+
+      if (response.status === 201) {
+        // show toast
+        this._snackbar.open("Expense Added", '', {
+          duration: 5000
+        });
+
+        this.updateExpenseCategory();
+        this.dialogRef.close(response.body.body);
+
+      } else {
+        // show toast
+        this._snackbar.open("Something went wrong", '', {
+          duration: 5000
+        });
+      }
+    });
+  }
+
+  updateExpenseCategory() {
+
+    this.expenseCategoryService.getExpenseCategoryByKey(this.receivedExpenseCategoryKey)
+      .subscribe((response) => {
+
+        if (response.status === 200) {
+          this.expenseCategoryService.updateExpenseCategory(
+            {
+              categoryName: response.body.body.categoryName,
+              categoryDescription: response.body.body.categoryDescription,
+              imageUrl: response.body.body.imageUrl,
+              key: response.body.body.key
+            }
+          ).subscribe((res) => {
+
+            if (res.status === 200) {
+              console.log("Expense Category updated")
+            }
+          })
+        }
+      });
+  }
+
+  // ------------------------------------------
+
+  updateExpenseDateAndTime(date: Date) {
+
+    const userTimeZone = DateUtil.getUserTimeZone();
+
+    console.log("time zone : " + userTimeZone);
+
+    const datePipe = new DatePipe('en-IN');
+    const isoDate = new Date(date.getTime()).toISOString();
+    this.formattedExpenseDate = datePipe.transform(isoDate, 'yyyy-MM-ddTHH:mm:ss', userTimeZone)
+
+    console.log("local : " + this.formattedExpenseDate);
+  }
+
+
+  // Payment method tags
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
 
@@ -136,114 +266,4 @@ export class AddEditExpenseComponent implements OnInit {
     return this.allPaymentMethods.filter(pm => pm.toLowerCase().includes(filterValue));
   }
 
-  updateExpenseDateAndTime(date: Date) {
-
-    const userTimeZone = DateUtil.getUserTimeZone();
-
-    console.log("time zone : " + userTimeZone);
-
-    const datePipe = new DatePipe('en-IN');
-    const isoDate = new Date(date.getTime()).toISOString();
-    this.formattedExpenseDate = datePipe.transform(isoDate, 'yyyy-MM-ddTHH:mm:ss', userTimeZone)
-
-    console.log("local : " + this.formattedExpenseDate);
-  }
-
-  saveChanges() {
-
-    console.log("formattedExpenseDate: " + this.formattedExpenseDate);
-    console.log("amount: " + this.expenseAmount);
-    console.log("spentOn: " + this.spentOn);
-    console.log("paymentMethods: " + [...this.selectedPaymentMethods].join(', '));
-    console.log("isForEditing: " + this.isForEditing);
-
-    if (this.isForEditing) {
-
-      // update the changes
-      const expenseRequest: ExpenseRequest = {
-        amount: this.expenseAmount,
-        spentOn: this.spentOn,
-        expenseDate: new Date(this.formattedExpenseDate).getTime(),
-        categoryKey: this.receivedExpenseCategoryKey,
-        paymentMethodsKeys: [],
-        newPaymentMethod: [...this.selectedPaymentMethods],
-        key: this.expense.key
-      }
-
-      this.expenseService.updateExpense(expenseRequest).subscribe((response) => {
-
-        if (response.status === 200) {
-
-          // show toast
-          this._snackbar.open("Expense Updated", '', {
-            duration: 5000
-          });
-
-          this.updateExpenseCategory();
-          this.dialogRef.close(response.body.body);
-
-        } else {
-          // show toast
-          this._snackbar.open("Something went wrong", '', {
-            duration: 5000
-          });
-        }
-      });
-
-    } else {
-
-      // add new expense
-      const expenseRequest: ExpenseRequest = {
-        amount: this.expenseAmount,
-        spentOn: this.spentOn,
-        expenseDate: new Date(this.formattedExpenseDate).getTime(),
-        categoryKey: this.receivedExpenseCategoryKey,
-        paymentMethodsKeys: [],
-        newPaymentMethod: [...this.selectedPaymentMethods]
-      }
-
-      this.expenseService.createNewExpense(expenseRequest).subscribe((response) => {
-
-        if (response.status === 201) {
-          // show toast
-          this._snackbar.open("Expense Added", '', {
-            duration: 5000
-          });
-
-          this.updateExpenseCategory();
-          this.dialogRef.close(response.body.body);
-
-        } else {
-          // show toast
-          this._snackbar.open("Something went wrong", '', {
-            duration: 5000
-          });
-        }
-      });
-    }
-
-  }
-
-  updateExpenseCategory() {
-
-    this.expenseCategoryService.getExpenseCategoryByKey(this.receivedExpenseCategoryKey)
-      .subscribe((response) => {
-
-        if (response.status === 200) {
-          this.expenseCategoryService.updateExpenseCategory(
-            {
-              categoryName: response.body.body.categoryName,
-              categoryDescription: response.body.body.categoryDescription,
-              imageUrl: response.body.body.imageUrl,
-              key: response.body.body.key
-            }
-          ).subscribe((res) => {
-
-            if (res.status === 200) {
-              console.log("Expense Category updated")
-            }
-          })
-        }
-      });
-  }
 }

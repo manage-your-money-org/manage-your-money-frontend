@@ -46,7 +46,8 @@
               <mat-icon>edit</mat-icon>
             </button>
 
-            <button class="expense-item-icon" mat-icon-button aria-label="Duplicate" color="primary">
+            <button (click)="duplicateExpense(expense)" class="expense-item-icon" mat-icon-button aria-label="Duplicate"
+                    color="primary">
               <mat-icon>file_copy</mat-icon>
             </button>
 

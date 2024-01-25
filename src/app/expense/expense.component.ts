@@ -4,10 +4,10 @@ import {ExpenseService} from "../services/expense/expense.service";
 import {ExpenseResponse} from "../shared/models/response/ExpenseResponse";
 import {FilterRequest} from "../shared/models/request/FilterRequest";
 import {PaymentMethod} from "../shared/models/response/PaymentMethod";
-import {MatDialog} from "@angular/material/dialog";
+import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {AddEditExpenseComponent} from "../add-edit-expense/add-edit-expense.component";
 import {DialogData} from "../shared/models/DialogData";
-import {EXPENSE_CATEGORY_KEY_KEY, EXPENSE_KEY_KEY} from "../shared/constants";
+import {DUPLICATE_EXPENSE_KEY, EXPENSE_CATEGORY_KEY_KEY, EXPENSE_KEY_KEY} from "../shared/constants";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {DeleteDialogComponent} from "../delete-dialog/delete-dialog.component";
 
@@ -122,20 +122,12 @@ export class ExpenseComponent implements OnInit {
       map: new Map<string, any>()
         .set(EXPENSE_CATEGORY_KEY_KEY, this.receivedCategoryKey)
         .set(EXPENSE_KEY_KEY, "add")
+        .set(DUPLICATE_EXPENSE_KEY, null)
     };
 
-    const dialogRef = this.matDialog.open(AddEditExpenseComponent, {
-      data: dialogData,
-      width: "500px",
-      maxHeight: "600px"
-    });
+    const dialogRef = this.openAddEditDialog(dialogData);
 
-    dialogRef.afterClosed().subscribe(result => {
-
-      const expenseResponse = result as ExpenseResponse;
-      this.expenseList.push(expenseResponse);
-      this.expenseList.sort((e1, e2) => e2.expenseDate - e1.expenseDate)
-    });
+    this.modifyExpenseListForExpenseAdditionAfterDialogClosed(dialogRef);
   }
 
   navigateToEditExpensePage(expense: ExpenseResponse) {
@@ -146,23 +138,22 @@ export class ExpenseComponent implements OnInit {
       map: new Map<string, any>()
         .set(EXPENSE_CATEGORY_KEY_KEY, this.receivedCategoryKey)
         .set(EXPENSE_KEY_KEY, expense.key)
+        .set(DUPLICATE_EXPENSE_KEY, null)
     };
 
-    const dialogRef = this.matDialog.open(AddEditExpenseComponent, {
-      data: dialogData,
-      width: "500px",
-      height: "600px"
-    });
+    const dialogRef = this.openAddEditDialog(dialogData);
 
     dialogRef.afterClosed().subscribe(result => {
 
-      const expenseResponse = result as ExpenseResponse;
+      if (result) {
+        const expenseResponse = result as ExpenseResponse;
 
-      const expenseIndex = this.expenseList.findIndex(obj => obj.key === expense.key);
+        const expenseIndex = this.expenseList.findIndex(obj => obj.key === expense.key);
 
-      if (expenseIndex !== -1) {
-        this.expenseList[expenseIndex] = {...this.expenseList[expenseIndex], ...expenseResponse}
-        this.expenseList.sort((e1, e2) => e2.expenseDate - e1.expenseDate)
+        if (expenseIndex !== -1) {
+          this.expenseList[expenseIndex] = {...this.expenseList[expenseIndex], ...expenseResponse}
+          this.expenseList.sort((e1, e2) => e2.expenseDate - e1.expenseDate)
+        }
       }
     });
   }
@@ -197,5 +188,41 @@ export class ExpenseComponent implements OnInit {
       }
     });
 
+  }
+
+  duplicateExpense(expense: ExpenseResponse) {
+
+    // todo: duplicated expense
+    const dialogData: DialogData = {
+      map: new Map<string, any>()
+        .set(EXPENSE_CATEGORY_KEY_KEY, this.receivedCategoryKey)
+        .set(EXPENSE_KEY_KEY, "duplicate")
+        .set(DUPLICATE_EXPENSE_KEY, expense)
+    };
+
+
+    const dialogRef = this.openAddEditDialog(dialogData);
+    this.modifyExpenseListForExpenseAdditionAfterDialogClosed(dialogRef);
+  }
+
+  private openAddEditDialog(dialogData: DialogData) {
+
+    return this.matDialog.open(AddEditExpenseComponent, {
+      data: dialogData,
+      width: "500px",
+      height: "600px"
+    });
+  }
+
+  private modifyExpenseListForExpenseAdditionAfterDialogClosed(dialogRef: MatDialogRef<AddEditExpenseComponent, any>) {
+
+    dialogRef.afterClosed().subscribe(result => {
+
+      if (result) {
+        const expenseResponse = result as ExpenseResponse;
+        this.expenseList.push(expenseResponse);
+        this.expenseList.sort((e1, e2) => e2.expenseDate - e1.expenseDate)
+      }
+    });
   }
 }
