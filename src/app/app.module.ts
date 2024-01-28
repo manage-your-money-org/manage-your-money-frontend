@@ -33,6 +33,9 @@ import {AddEditExpenseComponent} from './add-edit-expense/add-edit-expense.compo
 import {ExpensePaymentMethodItemComponent} from './expense-payment-method-item/expense-payment-method-item.component';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {
+  SelectExpenseCategoryDialogComponent
+} from './select-expense-category-dialog/select-expense-category-dialog.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +51,8 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     DeleteDialogComponent,
     ExpenseComponent,
     AddEditExpenseComponent,
-    ExpensePaymentMethodItemComponent
+    ExpensePaymentMethodItemComponent,
+    SelectExpenseCategoryDialogComponent
   ],
   imports: [
     BrowserModule,

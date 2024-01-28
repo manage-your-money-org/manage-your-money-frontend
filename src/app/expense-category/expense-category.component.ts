@@ -63,12 +63,6 @@ export class ExpenseCategoryComponent implements OnInit {
     return item.key;
   }
 
-  getFormattedDate(longValue: number): string {
-
-    const date = new Date(longValue);
-    return date.toLocaleDateString(); // Adjust format as needed
-  }
-
   navigateToAddExpenseCategory() {
 
     this.router.navigate(["expense-categories", "add"])

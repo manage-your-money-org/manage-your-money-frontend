@@ -51,7 +51,8 @@
               <mat-icon>file_copy</mat-icon>
             </button>
 
-            <button class="expense-item-icon" mat-icon-button aria-label="Move" color="primary">
+            <button (click)="moveExpenseToOtherExpenseCategory(expense)" class="expense-item-icon" mat-icon-button
+                    aria-label="Move" color="primary">
               <mat-icon>drive_file_move</mat-icon>
             </button>
 

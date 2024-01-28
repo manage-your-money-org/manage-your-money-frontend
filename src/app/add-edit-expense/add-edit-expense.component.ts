@@ -43,6 +43,7 @@ export class AddEditExpenseComponent implements OnInit {
   formattedExpenseDate: string;
   expenseAmount: number = 0.0;
   spentOn: string = '';
+  heading: string = '';
 
   constructor(private expenseService: ExpenseService,
               private expenseCategoryService: ExpenseCategoryService,
@@ -85,13 +86,13 @@ export class AddEditExpenseComponent implements OnInit {
 
       this.isForEditing = false;
       this.selectedPaymentMethods = new Set<string>(["CASH"]);
-
+      this.heading = "Add Expense";
     } else if (this.key === 'duplicate') {
 
       this.isForDuplicate = true;
       this.expense = duplicateExpense;
       this.initUI();
-
+      this.heading = "Duplicate Expense";
     } else {
 
       this.isForEditing = true;
@@ -102,6 +103,7 @@ export class AddEditExpenseComponent implements OnInit {
 
           this.expense = response.body;
           this.initUI();
+          this.heading = "Edit Expense";
         }
       });
     }

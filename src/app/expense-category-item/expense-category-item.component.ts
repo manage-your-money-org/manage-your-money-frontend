@@ -14,6 +14,7 @@ export class ExpenseCategoryItemComponent {
 
   @Input() expenseCategoryItem: ExpenseCategoryResponse
   @Input() isSelected: boolean
+  @Input() isCalledFromHome = true;
   @Output() itemSelected = new EventEmitter<ExpenseCategoryResponse>();
 
   constructor(private expenseService: ExpenseService, private router: Router) {

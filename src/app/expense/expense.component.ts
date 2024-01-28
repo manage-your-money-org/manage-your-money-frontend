@@ -10,6 +10,12 @@ import {DialogData} from "../shared/models/DialogData";
 import {DUPLICATE_EXPENSE_KEY, EXPENSE_CATEGORY_KEY_KEY, EXPENSE_KEY_KEY} from "../shared/constants";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {DeleteDialogComponent} from "../delete-dialog/delete-dialog.component";
+import {
+  SelectExpenseCategoryDialogComponent
+} from "../select-expense-category-dialog/select-expense-category-dialog.component";
+import {ExpenseRequest} from "../shared/models/request/ExpenseRequest";
+import {ExpenseCategoryResponse} from "../shared/models/response/ExpenseCategoryResponse";
+import {ExpenseCategoryService} from "../services/expense-category/expense-category.service";
 
 @Component({
   selector: 'app-expense',
@@ -30,6 +36,7 @@ export class ExpenseComponent implements OnInit {
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute,
               private expenseService: ExpenseService,
+              private expenseCategoryService: ExpenseCategoryService,
               private matDialog: MatDialog,
               private _snackbar: MatSnackBar
   ) {
@@ -158,10 +165,87 @@ export class ExpenseComponent implements OnInit {
     });
   }
 
+  moveExpenseToOtherExpenseCategory(expense: ExpenseResponse) {
+
+    const dialog = this.matDialog.open(SelectExpenseCategoryDialogComponent, {
+      width: "800px",
+      height: "500px"
+    });
+
+    dialog.afterClosed().subscribe((result => {
+
+      if (result) {
+
+        const selectedExpenseCategory = result as ExpenseCategoryResponse;
+
+        if (selectedExpenseCategory.key !== this.receivedCategoryKey) {
+
+          const expenseRequest: ExpenseRequest = {
+
+            amount: expense.amount,
+            spentOn: expense.spentOn,
+            expenseDate: expense.expenseDate,
+            categoryKey: selectedExpenseCategory.key,
+            paymentMethodsKeys: expense.paymentMethods.map(pm => pm.key),
+            newPaymentMethod: [],
+            key: expense.key
+          };
+
+          let isActionClicked = false;
+
+          this.expenseList.splice(this.expenseList.indexOf(expense), 1);
+
+          let snackbar = this._snackbar.open("Expense moved to " + selectedExpenseCategory.categoryName, 'Undo', {
+            duration: 3000
+          });
+
+          // when undo clicked
+          snackbar.onAction().subscribe(value => {
+
+            isActionClicked = true;
+
+            // add the expense back to the list
+            this.expenseList.push(expense);
+            this.expenseList.sort((e1, e2) => e2.expenseDate - e1.expenseDate)
+          });
+
+          // when no undo is clicked, call update expense for updating expense category key of expense
+          snackbar.afterDismissed().subscribe(value => {
+
+            if (!isActionClicked) {
+
+              this.expenseService.updateExpense(expenseRequest).subscribe((response) => {
+
+                if (response.status === 200) {
+
+                  this.expenseList.splice(this.expenseList.indexOf(expense), 1);
+
+                  this.updateExpenseCategoryModifiedDate(selectedExpenseCategory);
+
+                  // this._snackbar.open("Expense moved to " + selectedExpenseCategory.categoryName, '', {
+                  //   duration: 5000
+                  // });
+                } else {
+                  this._snackbar.open("Something went wrong!", '', {duration: 5000});
+
+                  // add the expense back to the list
+                  this.expenseList.push(expense);
+                  this.expenseList.sort((e1, e2) => e2.expenseDate - e1.expenseDate)
+                }
+              });
+            }
+          });
+        } else {
+          this._snackbar.open("Cannot move to same category!", '', {duration: 5000})
+        }
+      }
+    }));
+  }
+
   deleteExpense(expense: ExpenseResponse) {
 
     const dialogRef = this.matDialog.open(DeleteDialogComponent, {
-      data: "This will delete this category and it's expenses."
+      data: "This will delete this expense."
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -192,7 +276,6 @@ export class ExpenseComponent implements OnInit {
 
   duplicateExpense(expense: ExpenseResponse) {
 
-    // todo: duplicated expense
     const dialogData: DialogData = {
       map: new Map<string, any>()
         .set(EXPENSE_CATEGORY_KEY_KEY, this.receivedCategoryKey)
@@ -225,4 +308,24 @@ export class ExpenseComponent implements OnInit {
       }
     });
   }
+
+  private updateExpenseCategoryModifiedDate(selectedExpenseCategory: ExpenseCategoryResponse) {
+
+    // this will update only the modified date of expense category
+
+    this.expenseCategoryService.updateExpenseCategory(
+      {
+        categoryName: selectedExpenseCategory.categoryName,
+        categoryDescription: selectedExpenseCategory.categoryDescription,
+        imageUrl: selectedExpenseCategory.imageUrl,
+        key: selectedExpenseCategory.key
+      }
+    ).subscribe((res) => {
+
+      if (res.status === 200) {
+        console.log("Expense Category updated")
+      }
+    });
+  }
+
 }

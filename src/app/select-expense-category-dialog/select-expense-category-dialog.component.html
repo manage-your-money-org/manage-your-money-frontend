@@ -1,0 +1,27 @@
+<div class="search-bar search-bar-for-image-searching">
+  <input type="text" placeholder="Search category image" [(ngModel)]="searchInput"
+         (keyup.enter)="searchCategory()">
+  <mat-icon (click)="searchCategory()" matSuffix style="color: black">search</mat-icon>
+</div>
+
+<div *ngIf="expenseCategoryList.length !== 0" class="search-results" style="height: 85%"
+     infiniteScroll
+     [infiniteScrollDistance]="2"
+     [infiniteScrollThrottle]="1000"
+     (scrolled)="onScroll()"
+     [scrollWindow]="false">
+
+  <div class="item-container">
+
+    <app-expense-category-item
+      *ngFor="let item of expenseCategoryList"
+      [expenseCategoryItem]="item"
+      [isCalledFromHome]="false"
+      (itemSelected)="selectItem(item)">
+    </app-expense-category-item>
+
+  </div>
+
+  <mat-progress-bar *ngIf="isLoading" style="padding: 10px; margin: 10px" mode="indeterminate"></mat-progress-bar>
+
+</div>
