@@ -1,16 +1,25 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
+import {GlobalValuesService} from "./services/global-values.service";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
   title = 'manage-your-money-frontend';
+  currentlyOpenedCategoryName = '';
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private globalValuesService: GlobalValuesService) {
+  }
+
+  ngOnInit(): void {
+    this.globalValuesService.sharedData.subscribe(data => {
+
+      this.currentlyOpenedCategoryName = data.currentlyOpenedCategoryName !== undefined ? " > " + data.currentlyOpenedCategoryName : '';
+    });
   }
 
   doNotShowHeaderList = [
@@ -34,6 +43,7 @@ export class AppComponent {
   }
 
   onHeaderTitleClicked() {
+    this.currentlyOpenedCategoryName = '';
     this.router.navigate([""]);
   }
 }

@@ -3,7 +3,7 @@
 <mat-toolbar *ngIf="shouldShowHeaderComponent" color="primary" style="height: 60px; position: fixed; z-index: 1000">
 
   <div (click)="onHeaderTitleClicked()" class="toolbar-title-container">
-    <span class="toolbar-title">ManageYourMoney</span>
+    <span class="toolbar-title">ManageYourMoney {{ currentlyOpenedCategoryName }}</span>
   </div>
   <span class="spacer"></span>
 
