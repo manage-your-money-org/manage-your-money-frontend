@@ -3,7 +3,7 @@ import {BrowserModule, provideClientHydration} from '@angular/platform-browser';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {LoginComponent} from './login/login.component';
 import {HttpClientModule} from "@angular/common/http";
 import {ExpenseCategoryComponent} from './expense-category/expense-category.component';
@@ -28,6 +28,14 @@ import {AddEditExpenseCategoryComponent} from './add-edit-expense-category/add-e
 import {UnsplashImageItemComponent} from './unsplash-image-item/unsplash-image-item.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {DeleteDialogComponent} from './delete-dialog/delete-dialog.component';
+import {ExpenseComponent} from './expense/expense.component';
+import {AddEditExpenseComponent} from './add-edit-expense/add-edit-expense.component';
+import {ExpensePaymentMethodItemComponent} from './expense-payment-method-item/expense-payment-method-item.component';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {
+  SelectExpenseCategoryDialogComponent
+} from './select-expense-category-dialog/select-expense-category-dialog.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +48,11 @@ import {DeleteDialogComponent} from './delete-dialog/delete-dialog.component';
     ExpenseCategoryItemComponent,
     AddEditExpenseCategoryComponent,
     UnsplashImageItemComponent,
-    DeleteDialogComponent
+    DeleteDialogComponent,
+    ExpenseComponent,
+    AddEditExpenseComponent,
+    ExpensePaymentMethodItemComponent,
+    SelectExpenseCategoryDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -51,7 +63,8 @@ import {DeleteDialogComponent} from './delete-dialog/delete-dialog.component';
     NgOptimizedImage,
     BrowserAnimationsModule,
     MatIconModule, MatInputModule, MatFormFieldModule, MatCardModule, MatButtonModule, MatDividerModule,
-    MatListModule, MatRippleModule, MatDialogModule, MatToolbarModule, MatProgressBarModule
+    MatListModule, MatRippleModule, MatDialogModule, MatToolbarModule, MatProgressBarModule, MatChipsModule,
+    MatAutocompleteModule, ReactiveFormsModule
   ],
   providers: [
     provideClientHydration()

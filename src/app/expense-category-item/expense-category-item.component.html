@@ -1,5 +1,5 @@
-<!--<div [ngClass]="{'selected-item': isSelected, 'category-item': !isSelected}" (click)="onItemClick()">-->
-<div class="category-item" [ngClass]="{'selected-category-item': isSelected, 'not-selected-category-item': !isSelected}"
+<div class="category-item"
+     [ngClass]="{'selected-category-item': isSelected, 'not-selected-category-item': !isSelected, 'category-item-dimensions-big': isCalledFromHome, 'category-item-dimensions-small': !isCalledFromHome}"
      (click)="onItemClick()">
 
   <div class="expense-category-item-container">
@@ -12,11 +12,11 @@
 
     <div class="transparent-container category-item-name-and-menu-container">
 
-      <span *ngIf="!isSelected">{{expenseCategoryItem.categoryName}}</span>
+      <span *ngIf="!isSelected">{{ expenseCategoryItem.categoryName }}</span>
 
-      <div *ngIf="isSelected" class="menu-container">
+      <div *ngIf="isSelected && isCalledFromHome" class="menu-container">
 
-        <button mat-raised-button color="accent" (click)="navigateToExpensePage()">Show Expenses</button>
+        <button (click)="onShowExpenseBtnClicked()" mat-raised-button color="accent">Show Expenses</button>
 
       </div>
 

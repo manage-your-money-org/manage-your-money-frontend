@@ -15,4 +15,16 @@ export class DateUtil {
       lastDay: lastDay.getTime()
     };
   }
+
+  public static getUserTimeZone() {
+    try {
+      // Use the Intl.DateTimeFormat API to get the time zone
+      return Intl.DateTimeFormat().resolvedOptions().timeZone;
+    } catch (e) {
+      // Handle errors (e.g., if the API is not supported)
+      console.error("Error detecting time zone:", e);
+      return "UTC"; // Default to UTC if unable to detect
+    }
+  }
+
 }
