@@ -12,9 +12,14 @@
     <mat-icon matSuffix style="color: black">search</mat-icon>
   </div>
 
-  <div *ngIf="shouldShowMenuButtons" class="toolbar-menu-item-end">
+  <div [matMenuTriggerFor]="menu" #menuTrigger *ngIf="shouldShowMenuButtons" class="toolbar-menu-item-end">
     <span>Sort</span>
     <mat-icon matSuffix style="color:black;">sort</mat-icon>
+    <mat-menu #menu="matMenu">
+      <button [ngClass]="{'menu-btn-selected': menu.isSelected}" mat-menu-item (click)="emitSortMenuClick(menu)"
+              *ngFor="let menu of sortMenuForExpenseCategory">{{ menu.sortName }}
+      </button>
+    </mat-menu>
   </div>
 
   <div *ngIf="shouldShowMenuButtons" class="toolbar-menu-item-end">

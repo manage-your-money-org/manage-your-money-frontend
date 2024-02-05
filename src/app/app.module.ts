@@ -36,6 +36,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {
   SelectExpenseCategoryDialogComponent
 } from './select-expense-category-dialog/select-expense-category-dialog.component';
+import {MatMenuModule} from "@angular/material/menu";
 
 @NgModule({
   declarations: [
@@ -64,7 +65,7 @@ import {
     BrowserAnimationsModule,
     MatIconModule, MatInputModule, MatFormFieldModule, MatCardModule, MatButtonModule, MatDividerModule,
     MatListModule, MatRippleModule, MatDialogModule, MatToolbarModule, MatProgressBarModule, MatChipsModule,
-    MatAutocompleteModule, ReactiveFormsModule
+    MatAutocompleteModule, ReactiveFormsModule, MatMenuModule
   ],
   providers: [
     provideClientHydration()
