@@ -11,6 +11,9 @@ import {FilterRequest} from "../shared/models/request/FilterRequest";
 import {MatDialog} from "@angular/material/dialog";
 import {DeleteDialogComponent} from "../delete-dialog/delete-dialog.component";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {EventHandlerService} from "../services/event-handler.service";
+import {EXPENSE_CATEGORY_SORT_PREF_KEY, SORT_DESCENDING_DATE} from "../shared/constants";
+import {LocalStorageService} from "../services/local-storage.service";
 
 @Component({
   selector: 'app-expense-category',
@@ -30,9 +33,21 @@ export class ExpenseCategoryComponent implements OnInit {
   isLastPage = false;
 
   selectedItem: ExpenseCategoryResponse;
+  sort: string = SORT_DESCENDING_DATE;
 
   constructor(private router: Router, private expenseCategoryService: ExpenseCategoryService,
-              private expenseService: ExpenseService, private dialog: MatDialog, private _snackbar: MatSnackBar) {
+              private expenseService: ExpenseService, private dialog: MatDialog,
+              private _snackbar: MatSnackBar, private eventHandlerService: EventHandlerService,
+              private localStorageService: LocalStorageService
+  ) {
+
+    let categorySort = this.localStorageService.getItem(EXPENSE_CATEGORY_SORT_PREF_KEY);
+
+    if (categorySort) {
+      this.sort = categorySort;
+    }
+
+    this.getExpenseCategories();
   }
 
   selectItem(item: ExpenseCategoryResponse) {
@@ -43,7 +58,15 @@ export class ExpenseCategoryComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.getExpenseCategories()
+    console.log("Sort category: " + this.sort);
+
+    this.eventHandlerService.sortMenuForExpenseCategoryClick.subscribe(value => {
+
+      console.log("Sort menu that is selected: " + value);
+      this.sort = (value) ? value : SORT_DESCENDING_DATE;
+      this.resetCategoryList();
+      this.getExpenseCategories();
+    });
   }
 
   onScroll() {
@@ -63,56 +86,20 @@ export class ExpenseCategoryComponent implements OnInit {
     return item.key;
   }
 
-  navigateToAddExpenseCategory() {
-
-    this.router.navigate(["expense-categories", "add"])
-  }
-
-  navigateToEditExpenseCategory() {
-
-    this.router.navigate(["expense-categories", this.selectedItem.key])
-  }
-
-  deleteExpenseCategory() {
-
-    const dialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: "This will delete this category and it's expenses."
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-
-      console.log(`Dialog result: ${result}`);
-
-      if (result) {
-
-        this.expenseCategoryService.deleteExpenseCategoryByKey(
-          this.selectedItem.key
-        ).subscribe((response) => {
-
-          if (response.status === 204) {
-
-            this._snackbar.open("Category deleted successfully", '', {
-              duration: 5000
-            });
-
-            this.expenseCategoryList.splice(this.expenseCategoryList.indexOf(this.selectedItem), 1);
-          } else {
-            this._snackbar.open("Something went wrong!", '', {duration: 5000})
-          }
-        });
-      }
-    });
-  }
 
   private getExpenseCategories() {
 
+    console.log("getExpenseCategories sort: " + this.sort);
+
     this.expenseCategoryService.getAllCategories(
-      this.currentPage, this.pageSize, "modified,desc"
+      this.currentPage, this.pageSize, this.sort
     ).subscribe({
 
       next: (response: HttpResponse<MymApiResponse<PageableResponse<ExpenseCategoryResponse>>>) => {
 
         if (response.status === 200) {
+
+          console.log("Category list fetched successfully");
 
           this.isError = false;
           const pageableResponse = response.body.body;
@@ -158,5 +145,59 @@ export class ExpenseCategoryComponent implements OnInit {
         this.errorMessage = "Unable to fetch expense categories - \nstatus: " + error.status + "\nmessage: " + (error.error.message === null || error.error.message === '') ? error.message : error.error.message;
       }
     });
+  }
+
+  navigateToAddExpenseCategory() {
+
+    this.router.navigate(["expense-categories", "add"])
+  }
+
+  navigateToEditExpenseCategory() {
+
+    this.router.navigate(["expense-categories", this.selectedItem.key])
+  }
+
+  deleteExpenseCategory() {
+
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {
+      data: "This will delete this category and it's expenses."
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+      console.log(`Dialog result: ${result}`);
+
+      if (result) {
+
+        this.expenseCategoryService.deleteExpenseCategoryByKey(
+          this.selectedItem.key
+        ).subscribe((response) => {
+
+          if (response.status === 204) {
+
+            this._snackbar.open("Category deleted successfully", '', {
+              duration: 5000
+            });
+
+            this.expenseCategoryList.splice(this.expenseCategoryList.indexOf(this.selectedItem), 1);
+          } else {
+            this._snackbar.open("Something went wrong!", '', {duration: 5000})
+          }
+        });
+      }
+    });
+  }
+
+
+  private resetCategoryList() {
+
+    console.log("Reset category list")
+
+    this.expenseCategoryList = [];
+    this.isLastPage = false;
+    this.isError = false;
+    this.errorMessage = '';
+    this.currentPage = 0;
+    this.isLoading = true;
   }
 }

@@ -16,6 +16,7 @@ import {
 import {ExpenseRequest} from "../shared/models/request/ExpenseRequest";
 import {ExpenseCategoryResponse} from "../shared/models/response/ExpenseCategoryResponse";
 import {ExpenseCategoryService} from "../services/expense-category/expense-category.service";
+import {GlobalValuesService} from "../services/global-values.service";
 
 @Component({
   selector: 'app-expense',
@@ -38,7 +39,8 @@ export class ExpenseComponent implements OnInit {
               private expenseService: ExpenseService,
               private expenseCategoryService: ExpenseCategoryService,
               private matDialog: MatDialog,
-              private _snackbar: MatSnackBar
+              private _snackbar: MatSnackBar,
+              private globalValueService: GlobalValuesService
   ) {
   }
 
@@ -47,6 +49,15 @@ export class ExpenseComponent implements OnInit {
   ngOnInit(): void {
 
     this.receivedCategoryKey = this.activatedRoute.snapshot.params["expenseCategoryKey"];
+
+    this.expenseCategoryService.getExpenseCategoryByKey(
+      this.receivedCategoryKey
+    ).subscribe(response => {
+      if (response.ok) {
+        //this.globalValueService.updateCurrentlyOpenedCategoryName(response.body.body.categoryName);
+        this.globalValueService.updateData(response.body.body.categoryName);
+      }
+    });
 
     this.getAllExpenses();
   }
