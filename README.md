@@ -2,26 +2,24 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.0.
 
-## Development server
+#### This frontend service make use of the backend service ManageYourMoney
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Login
+![image](https://github.com/manage-your-money-org/manage-your-money-frontend/assets/63965898/b9eef745-a5a4-4741-86fa-8e95285a380c)
 
-## Code scaffolding
+## SignUp
+![image](https://github.com/manage-your-money-org/manage-your-money-frontend/assets/63965898/a8730ab5-da3f-477c-a35c-75e9c165022d)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Expense-category-page
+![image](https://github.com/manage-your-money-org/manage-your-money-frontend/assets/63965898/297c5825-bffd-4ea2-862d-feb561c68af0)
+![image](https://github.com/manage-your-money-org/manage-your-money-frontend/assets/63965898/d365212f-67f5-4e10-9c3e-0709a1e27db2)
+![image](https://github.com/manage-your-money-org/manage-your-money-frontend/assets/63965898/42339dba-dfa0-4f9a-a9d0-1f3ea7bbf3d6)
 
-## Build
+## expense-page
+![image](https://github.com/manage-your-money-org/manage-your-money-frontend/assets/63965898/4013f2a4-8985-4f31-9b0b-b0e6dcb38742)
+![image](https://github.com/manage-your-money-org/manage-your-money-frontend/assets/63965898/579419db-63db-42b9-ac97-32d283fb8644)
+![image](https://github.com/manage-your-money-org/manage-your-money-frontend/assets/63965898/7630b0c2-43d3-4248-8991-66f50df865f0)
+![image](https://github.com/manage-your-money-org/manage-your-money-frontend/assets/63965898/6f35d530-eb00-41dc-a1df-8f9db592c3eb)
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
