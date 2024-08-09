@@ -1,0 +1,19 @@
+.add-expense-payment-method-item-container {
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 10px;
+}
+
+.payment-method-item {
+
+  padding: 2px 10px;
+  background-color: #E2A243;
+  border: 1px #232323;
+  border-radius: 100px;
+  margin: 5px;
+  display: flex;
+  flex-direction: row;
+}

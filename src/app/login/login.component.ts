@@ -2,9 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {UserAuthenticationService} from "../services/user-authentication/user-authentication.service";
 import {HttpResponse} from "@angular/common/http";
-import {ExpenseCategoryService} from "../services/expense-category/expense-category.service";
 import {LoginRequest} from "../shared/models/request/LoginRequest";
-import {UserRequest} from "../shared/models/request/UserRequest";
+import {MymUtil} from '../shared/util/MymUtil';
+import {MatDialog} from "@angular/material/dialog";
+import {ForgotPasswordComponent} from "../forgot-password/forgot-password.component";
 
 @Component({
   selector: 'app-login',
@@ -14,62 +15,85 @@ import {UserRequest} from "../shared/models/request/UserRequest";
 export class LoginComponent implements OnInit {
 
   emailId: string = '';
+  isEmailValid = true;
   password: string = '';
-  errorMessage: string = "Invalid credentials"
-  isInvalidPassword: boolean = false;
+  isPasswordValid = true;
+  errorMessage: string = ""
+  isLoginValid: boolean = false;
 
-  constructor(private router: Router, private authenticationService: UserAuthenticationService, private expenseCategoryService: ExpenseCategoryService) {
+  hide = true;
+
+  constructor(private router: Router, private authenticationService: UserAuthenticationService, private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
 
   }
 
-  handleLoginOnClickSignInBtn() {
+  onSignInButtonClicked() {
 
-    let loginRequest: LoginRequest = {
-      emailId: this.emailId,
-      password: this.password
-    }
+    this.isLoginValid = true;
+    this.errorMessage = '';
 
-    console.log("Clicked handle login button")
+    this.isEmailValid = MymUtil.isStringValid(this.emailId) && MymUtil.isEmailIdValid(this.emailId.trim());
+    this.isPasswordValid = MymUtil.isStringValid(this.password) && MymUtil.isPasswordValid(this.password.trim());
 
-    this.authenticationService.loginUser(loginRequest).subscribe({
+    if (this.isEmailValid && this.isPasswordValid) {
 
-        next: (response: HttpResponse<any>) => {
-
-          console.log(response.status);
-          console.log(response.body);
-
-          return response.body;
-        },
-        error: (error) => {
-
-          console.log("Error while registering user: " + error + ", status code: " + error.status)
-        },
-        complete: () => {
-
-          console.log("Registering user request completed")
-        }
+      let loginRequest: LoginRequest = {
+        emailId: this.emailId,
+        password: this.password
       }
-    )
+
+      console.log("Clicked handle login button")
+
+      this.authenticationService.loginUser(loginRequest).subscribe({
+
+          next: (response: HttpResponse<any>) => {
+
+            console.log(response.status);
+            console.log(response.body.error);
+
+            if (response.status == 200) {
+
+              this.isLoginValid = true;
+              this.router.navigate(['/expense-categories'])
+            } else {
+              this.isLoginValid = false;
+              this.errorMessage = "Something went wrong!!"
+            }
+
+          },
+          error: (error) => {
+
+            this.isLoginValid = false;
+
+            this.errorMessage = "Error while Login: " + error.message;
+
+            if (error.status == 403) {
+
+              this.errorMessage = "Username or password not valid"
+            }
+
+            console.log("Error while logging user: " + error + ", status code: " + error.status)
+          }
+        }
+      )
+    } else {
+
+      this.isLoginValid = false;
+      this.errorMessage = !this.isEmailValid ? "Email not valid" : "Password should be at least 8 character, should contain a letter, a digit and a special character (!@#$%^&*)";
+    }
   }
 
-  registerUser() {
+  navigateToForgotPassword() {
+    //this.router.navigate(['/forgot-password']);
 
-    let userRequest: UserRequest = {
+    this.dialog.open(ForgotPasswordComponent);
+  }
 
-      name: "sjnkjnskns",
-      emailId: "sjknsknksn@gmail.com",
-      password: "something"
-    }
+  navigateToRegisterUser() {
 
-    this.authenticationService.registerUser(userRequest).subscribe({
-      next: (response: HttpResponse<any>) => {
-
-        console.log("User information status: " + response.status);
-        console.log("User information: " + response.body);
-      }
-    });
+    this.router.navigate(['/register']);
   }
 }

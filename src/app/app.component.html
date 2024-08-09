@@ -1,7 +1,41 @@
-<!--header-->
+<!--</app-header>-->
 
-<div class="container">
-    <router-outlet></router-outlet>
+<mat-toolbar *ngIf="shouldShowHeaderComponent" color="primary" style="height: 60px; position: fixed; z-index: 1000">
+
+  <div (click)="onHeaderTitleClicked()" class="toolbar-title-container">
+    <span class="toolbar-title">ManageYourMoney {{ currentlyOpenedCategoryName }}</span>
+  </div>
+  <span class="spacer"></span>
+
+  <div *ngIf="shouldShowMenuButtons" class="search-bar search-bar-in-toolbar">
+    <input type="text" placeholder="Search">
+    <mat-icon matSuffix style="color: black">search</mat-icon>
+  </div>
+
+  <div [matMenuTriggerFor]="menu" #menuTrigger *ngIf="shouldShowMenuButtons" class="toolbar-menu-item-end">
+    <span>Sort</span>
+    <mat-icon matSuffix style="color:black;">sort</mat-icon>
+    <mat-menu #menu="matMenu">
+      <button [ngClass]="{'menu-btn-selected': menu.isSelected}" mat-menu-item (click)="emitSortMenuClick(menu)"
+              *ngFor="let menu of sortMenuForExpenseCategory">{{ menu.sortName }}
+      </button>
+    </mat-menu>
+  </div>
+
+  <div *ngIf="shouldShowMenuButtons" class="toolbar-menu-item-end">
+    <span>Graphs</span>
+    <mat-icon matSuffix style="color:black;">bar_chart</mat-icon>
+  </div>
+
+</mat-toolbar>
+
+<!--<div style="width: 100%; height: 100%;"-->
+<!--     [ngClass]="{'when-toolbar-hidden': !shouldShowHeaderComponent, 'when-toolbar-visible': shouldShowHeaderComponent}">-->
+<!--  <router-outlet (activate)="onActivate($event)"></router-outlet>-->
+<!--</div>-->
+
+<div style="width: 100%; height: 100%;">
+  <router-outlet (activate)="onActivate($event)"></router-outlet>
 </div>
 
 <!--footer-->

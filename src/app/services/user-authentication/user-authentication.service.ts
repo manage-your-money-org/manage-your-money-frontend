@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
-import {Observable} from "rxjs";
 import {MymUtil} from "../../shared/util/MymUtil";
 import {UserRequest} from "../../shared/models/request/UserRequest";
 import {LoginRequest} from "../../shared/models/request/LoginRequest";
@@ -9,6 +8,7 @@ import {MymApiResponse} from "../../shared/models/response/MymApiResponse";
 import {UserResponse} from "../../shared/models/response/UserResponse";
 import {TokenResponse} from "../../shared/models/response/TokenResponse";
 import {PasswordResetRequest} from "../../shared/models/request/PasswordResetRequest";
+import {response} from "express";
 
 @Injectable({
   providedIn: 'root'
@@ -23,14 +23,16 @@ export class UserAuthenticationService {
 
 
   // register or create user
-  registerUser(userRequest: UserRequest): Observable<any> {
+  registerUser(userRequest: UserRequest) {
 
     let url: string = `${this.userBaseUrl}/create`;
 
     console.log("Create User post request")
+
     return this.httpClient.post<MymApiResponse<UserResponse>>(url, userRequest, {
       observe: "response",
-      headers: MymUtil.getHeaders()
+      headers: MymUtil.getHeaders(),
+      withCredentials: true
     });
   }
 
@@ -40,7 +42,10 @@ export class UserAuthenticationService {
     body.append("username", loginRequest.emailId);
     body.append("password", loginRequest.password);
 
-    return this.httpClient.post<TokenResponse>(this.loginUrl, body, {observe: "response"});
+    return this.httpClient.post<MymApiResponse<TokenResponse>>(this.loginUrl, body, {
+      observe: "response",
+      withCredentials: true
+    });
   }
 
   forgotPassword(email: string) {
@@ -49,7 +54,8 @@ export class UserAuthenticationService {
 
     return this.httpClient.post<MymApiResponse<string>>(
       `${this.userBaseUrl}/password/forgot`,
-      {observe: "response", headers: MymUtil.getHeaders(), params: params}
+      null,
+      {observe: "response", headers: MymUtil.getHeaders(), withCredentials: true, params: params},
     );
   }
 
@@ -80,6 +86,7 @@ export class UserAuthenticationService {
       {
         observe: "response",
         headers: MymUtil.getHeaders(),
+        withCredentials: true
       }
     )
   }
@@ -94,7 +101,8 @@ export class UserAuthenticationService {
       {
         observe: "response",
         headers: MymUtil.getHeaders(),
-        params: params
+        params: params,
+        withCredentials: true
       }
     )
   }
@@ -113,6 +121,7 @@ export class UserAuthenticationService {
       {
         observe: "response",
         headers: MymUtil.getHeaders(),
+        withCredentials: true
       }
     )
   }
@@ -126,5 +135,11 @@ export class UserAuthenticationService {
     })
   }
 
+  logoutUser() {
 
+    return this.httpClient.post<MymApiResponse<String>>(`${this.userBaseUrl}/logout`, null, {
+      observe: "response",
+      withCredentials: true
+    });
+  }
 }

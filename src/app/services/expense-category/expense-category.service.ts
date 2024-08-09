@@ -47,16 +47,12 @@ export class ExpenseCategoryService {
   }
 
   //get all categories
-  getAllCategories(page: number, size: number, sort: string[]) {
+  getAllCategories(page: number, size: number, sort: string) {
 
     let params = new HttpParams()
       .append("page", page)
-      .append("size", size);
-
-    sort.forEach((element) => {
-
-      params.append("sort", element)
-    });
+      .append("size", size)
+      .append("sort", sort)
 
     return this.httpClient.get<MymApiResponse<PageableResponse<ExpenseCategoryResponse>>>(
       `${this.baseUrl}`,

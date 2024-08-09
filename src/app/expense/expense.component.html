@@ -1,0 +1,93 @@
+<div style="display: flex;" class="page-below-toolbar">
+
+  <div *ngIf="expenseList.length !== 0" class="search-results"
+       infiniteScroll
+       [infiniteScrollDistance]="2"
+       [infiniteScrollThrottle]="1000"
+       (scrolled)="onScroll()"
+       [scrollWindow]="false">
+
+    <div class="item-container">
+
+      <div class="expense-item"
+           *ngFor="let expense of expenseList; trackBy: trackByFn"
+      >
+
+        <div class="expense-item-bigger-side-container">
+
+          <div class="expense-item-bigger-side-content">
+
+            <span class="expense-item-base-span">{{ expense.expenseDate | date: 'dd-MM-yyyy hh:mm a' }}</span>
+
+            <hr style="width: 100%; color: rgba(150,150,150,0.74)">
+
+            <span class="expense-item-base-span"
+                  style="font-size: 22px; color: #232323">{{expense.amount | number: '1.2-2'}}</span>
+
+            <hr style="width: 100%; color: rgba(150,150,150,0.74)">
+
+            <span class="expense-item-base-span" style="font-size: 14px; max-height: 40px">{{expense.spentOn}}</span>
+
+            <hr style="width: 100%; color: rgba(150,150,150,0.74)">
+
+            <span class="expense-item-base-span"
+                  style="font-size: 13px">{{getFormattedPaymentMethods(expense.paymentMethods)}}</span>
+
+          </div>
+
+        </div>
+
+        <div class="expense-item-smaller-side-container">
+
+          <div
+            style=" display: flex; flex-direction: column; width: 100%; height: 100%; justify-content: center; align-items: center">
+
+            <button (click)="navigateToEditExpensePage(expense)" class="expense-item-icon" mat-icon-button aria-label="Edit" color="primary">
+              <mat-icon>edit</mat-icon>
+            </button>
+
+            <button (click)="duplicateExpense(expense)" class="expense-item-icon" mat-icon-button aria-label="Duplicate"
+                    color="primary">
+              <mat-icon>file_copy</mat-icon>
+            </button>
+
+            <button (click)="moveExpenseToOtherExpenseCategory(expense)" class="expense-item-icon" mat-icon-button
+                    aria-label="Move" color="primary">
+              <mat-icon>drive_file_move</mat-icon>
+            </button>
+
+            <button (click)="deleteExpense(expense)" class="expense-item-icon" mat-icon-button aria-label="Delete"
+                    color="warn">
+              <mat-icon>delete</mat-icon>
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <mat-progress-bar *ngIf="isLoading" style="padding: 10px; margin: 10px" mode="indeterminate"></mat-progress-bar>
+
+  <div *ngIf="expenseList.length === 0 && !isError"
+       class="center"
+  >
+    <span>Please click on add button for adding new expense.</span>
+  </div>
+
+  <div *ngIf="isError" class="center">
+
+    <span>{{errorMessage}}</span>
+  </div>
+
+  <div (click)="navigateToAddExpensePage()" class="add-button">
+
+    <mat-icon matPrefix style="color:white;margin-right: 3px">add</mat-icon>
+    <span>Add Expense</span>
+  </div>
+
+</div>

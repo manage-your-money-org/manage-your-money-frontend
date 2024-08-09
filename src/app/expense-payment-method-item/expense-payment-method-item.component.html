@@ -1,0 +1,15 @@
+<div class="add-expense-payment-method-item-container">
+
+  <div *ngFor="let paymentMethod of paymentMethods" class="payment-method-item"
+       [ngClass]="{'add-payment-method': paymentMethod.key==='add' , 'selected-payment-method-item': (isSelected && paymentMethod.key!=='add'), 'not-selected-payment-method-item': (!isSelected && paymentMethod.key!=='add')}"
+       (click)="togglePaymentMethodSelection(paymentMethod)">
+
+    <div class="payment-method-item">
+
+      <span>{{ paymentMethod.paymentMethodName }}</span>
+      <mat-icon>close</mat-icon>
+    </div>
+
+  </div>
+</div>
+

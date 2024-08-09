@@ -1,0 +1,25 @@
+.submit-button {
+
+  width: 200px;
+  height: 50px;
+  border-radius: 100px;
+  padding: 5px;
+  cursor: pointer;
+  background-color: #0687FF;
+  margin-top: 30px;
+  transition: 200ms;
+}
+
+
+.submit-button:hover {
+
+  width: 180px;
+  height: 45px;
+}
+
+.add-expense-payment-method-container {
+
+  padding: 15px;
+  border-width: 1px;
+  border-color: #232323;
+}

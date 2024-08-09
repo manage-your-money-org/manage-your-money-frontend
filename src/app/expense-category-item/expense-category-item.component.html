@@ -1,0 +1,28 @@
+<div class="category-item"
+     [ngClass]="{'selected-category-item': isSelected, 'not-selected-category-item': !isSelected, 'category-item-dimensions-big': isCalledFromHome, 'category-item-dimensions-small': !isCalledFromHome}"
+     (click)="onItemClick()">
+
+  <div class="expense-category-item-container">
+
+    <div class="image-container">
+      <img
+        src="{{expenseCategoryItem.imageUrl === null || expenseCategoryItem.imageUrl === '' ? 'assets/no_image_placeholder.jpg' : expenseCategoryItem.imageUrl}}"
+        alt="{{expenseCategoryItem.categoryName}}" class="image-fit">
+    </div>
+
+    <div class="transparent-container category-item-name-and-menu-container">
+
+      <span *ngIf="!isSelected">{{ expenseCategoryItem.categoryName }}</span>
+
+      <div *ngIf="isSelected && isCalledFromHome" class="menu-container">
+
+        <button (click)="onShowExpenseBtnClicked()" mat-raised-button color="accent">Show Expenses</button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+</div>

@@ -1,0 +1,687 @@
+/* You can add global styles to this file, and also import other style files */
+/*
+@import url(https://unpkg.com/bootstrap@4.1.1/dist/css/bootstrap.min.css);
+*/
+
+/*
+my-colors:
+darkest: 01204e
+dark: 033682
+light-dark: 033682
+light: 4e60ec
+ */
+
+@use "@angular/material" as mat;
+@import "custom-theme.scss";
+
+$theme: $manage-your-money-frontend-theme;
+
+$primary-default: mat.get-theme-color($theme, primary, default);
+$accent-color: mat.get-theme-color($theme, accent, A200);
+
+.center-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.border-padding {
+  border: solid 1px #CCC;
+  padding: 30px;
+}
+
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: auto;
+  transform: translate(-50%, -50%);
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+/*-------------*/
+
+.fixed-toolbar {
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+}
+
+.page-below-toolbar {
+  width: 100%;
+  height: calc(100% - 60px);
+  padding-top: 60px;
+}
+
+.smaller-side-container {
+
+  width: 30%;
+  height: 100%;
+  background-color: $primary-default;
+  position: relative;
+}
+
+.bigger-side-container {
+  color: $primary-default;
+  width: 70%;
+  position: relative;
+  height: 100%;
+}
+
+.login-signup-section-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.login-signup-header {
+
+  padding: 10px;
+  text-align: center;
+}
+
+.login-signup-header span {
+
+  font-weight: bolder;
+  font-size: 35px;
+  font-family: Georgia, sans-serif;
+  color: aliceblue;
+  padding: 5px;
+}
+
+.login-signup-content {
+
+  padding: 10px;
+  margin-left: 20px;
+  margin-right: 20px;
+  text-align: center;
+}
+
+.login-signup-content span {
+
+  font-size: 15px;
+  font-family: Georgia, sans-serif;
+  color: aliceblue;
+  padding: 5px;
+  user-select: none;
+}
+
+.div-button-stroke {
+
+  width: 250px;
+  height: 50px;
+  border: 1px solid aliceblue;
+  border-radius: 100px;
+  padding: 5px;
+  display: table;
+  text-align: center;
+  cursor: pointer;
+  margin-top: 50px;
+}
+
+.div-button-stroke span {
+
+  display: table-cell;
+  vertical-align: middle;
+  font-family: Bahnschrift, serif;
+  font-size: 15px;
+  color: aliceblue;
+  user-select: none;
+}
+
+.login-signup-container {
+
+  width: 50%;
+  padding: 15px;
+}
+
+.signIn-signUp-header {
+
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.signIn-signUp-header span {
+
+  font-weight: bold;
+  font-size: 40px;
+  padding: 3px;
+  font-family: Georgia, sans-serif;
+  color: #0687FF;
+  user-select: none;
+}
+
+.login-signup-form-container {
+
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
+}
+
+.form-error {
+  font-size: 12px;
+  color: orangered;
+  padding: 10px;
+}
+
+.form-success {
+  font-size: 12px;
+  color: darkgreen;
+}
+
+.toolbar-title-container {
+  height: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  cursor: pointer;
+  caret-color: transparent;
+}
+
+.toolbar-title {
+  font-size: 20px;
+  user-select: none;
+  padding: 5px;
+  caret-color: transparent;
+}
+
+.search-bar {
+
+  height: 25px;
+  display: flex;
+  cursor: pointer;
+  padding: 10px 20px;
+  border-radius: 30px;
+  background: #fff;
+  align-items: center;
+  margin-left: 20px;
+  margin-right: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.search-bar-in-toolbar input {
+
+  width: 50px;
+  outline: none;
+  border: none;
+  font-weight: 500;
+  transition: 400ms;
+  background: transparent;
+}
+
+.search-bar-in-toolbar:hover input {
+
+  width: 400px;
+}
+
+.search-bar-for-image-searching {
+  margin-top: 30px;
+}
+
+.search-bar-for-image-searching input {
+  width: 100%;
+  outline: none;
+  border: none;
+  font-weight: 500;
+  transition: 400ms;
+  background: transparent;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+
+.toolbar-menu-item-end {
+
+  height: 25px;
+  display: flex;
+  cursor: pointer;
+  padding: 10px 20px;
+  border-radius: 30px;
+  background: #fff;
+  align-items: center;
+  margin-right: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  caret-color: transparent;
+}
+
+// for width transition refer this:
+// https://stackoverflow.com/questions/52337025/no-css-transition-for-height-fit-content
+.toolbar-menu-item-end span {
+  max-width: 0;
+  font-weight: normal;
+  color: black;
+  background: transparent;
+  margin-right: 5px;
+  user-select: none;
+  transition: all ease-in-out 400ms;
+  overflow: hidden;
+  caret-color: transparent;
+}
+
+.toolbar-menu-item-end:hover span {
+  max-width: 150px;
+}
+
+.section-header-container {
+
+  width: 100%;
+  height: 50px;
+  background-color: $accent-color;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  caret-color: transparent;
+}
+
+.section-header-container > span {
+
+  padding: 10px;
+  font-size: 25px;
+  color: #676767;
+  caret-color: transparent;
+}
+
+.search-results {
+  overflow: scroll;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  caret-color: transparent;
+}
+
+.item-container {
+
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  caret-color: transparent;
+}
+
+.category-item-dimensions-big {
+  width: 250px;
+  height: 250px;
+}
+
+.category-item-dimensions-small {
+  width: 200px;
+  height: 200px;
+}
+
+.category-item {
+  margin: 20px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  transition: 0.8s;
+  background-color: rgba(226, 162, 67, 0.56);
+  caret-color: transparent;
+}
+
+.unsplash-search-image-item {
+
+  width: 100px;
+  height: 100px;
+  margin: 20px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  transition: 0.8s;
+  background-color: rgba(226, 162, 67, 0.56);
+  caret-color: transparent;
+}
+
+.expense-category-item-container {
+
+  height: 100%;
+  width: 100%;
+  position: relative;
+  transition: 200ms;
+  caret-color: transparent;
+}
+
+.image-container {
+
+  height: 100%;
+  width: 100%;
+  transition: 0.5s;
+}
+
+.image-container > img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: center center;
+  transition: 0.5s;
+}
+
+.selected-category-item {
+
+  background-color: #E2A243;
+}
+
+.not-selected-category-item:hover > .expense-category-item-container {
+  transform: scale(95%);
+  caret-color: transparent;
+}
+
+.selected-category-item > .expense-category-item-container {
+  height: 95%;
+  width: 95%;
+  caret-color: transparent;
+}
+
+.transparent-container {
+
+  height: 100%;
+  width: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.31);
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  caret-color: transparent;
+}
+
+.category-item-name-and-menu-container > span {
+
+  color: white;
+  font-size: 25px;
+  font-weight: bold;
+  user-select: none;
+  caret-color: transparent;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.menu-container {
+
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  caret-color: transparent;
+}
+
+
+.category-detail-container {
+
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  caret-color: transparent;
+}
+
+.expense-category-image {
+
+  position: relative;
+  height: 40%;
+  width: 100%;
+}
+
+.image-fit {
+  object-fit: cover;
+  object-position: center center;
+  transition: 0.5s;
+  caret-color: transparent;
+}
+
+.expense-category-image > img {
+
+  height: 100%;
+  width: 100%;
+}
+
+.expense-category-description-container {
+
+  position: relative;
+  height: 60%;
+  width: 100%;
+  background-color: white;
+  border-left: 1px solid gray;
+  caret-color: transparent;
+}
+
+.detail-container {
+
+  padding: 5px;
+  margin-top: 10px;
+  margin-left: 10px;
+  caret-color: transparent;
+}
+
+.detail-header {
+  color: black;
+  font-size: 13px;
+  padding: 3px;
+  caret-color: transparent;
+}
+
+.detail-value {
+  color: #676767;
+  font-size: 15px;
+  margin-left: 2px;
+  padding: 3px;
+  caret-color: transparent;
+}
+
+.preview-header {
+
+  padding: 10px;
+  background-color: white;
+  border-bottom: 1px solid rgba(138, 138, 138, 0.73);
+  margin-top: 5px;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  caret-color: transparent;
+}
+
+.preview-header-category-name {
+  flex-grow: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  caret-color: transparent;
+}
+
+.preview-header-menu-buttons {
+  flex-grow: 1;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-right: 5px;
+  caret-color: transparent;
+}
+
+.preview-header-menu-buttons > button {
+  margin-left: 3px;
+  margin-right: 3px;
+  caret-color: transparent;
+}
+
+.add-button {
+
+  width: 150px;
+  height: 50px;
+  border-radius: 200px;
+  background-color: $primary-default;
+  position: fixed;
+  display: flex;
+  bottom: 20px;
+  right: 40px;
+  z-index: 1000;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: width 200ms;
+  caret-color: transparent;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+}
+
+.add-button:hover {
+  width: 140px;
+}
+
+.add-button > span {
+
+  font-size: 15px;
+  color: white;
+  user-select: none;
+  caret-color: transparent;
+  padding: 5px;
+}
+
+.form-container {
+
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.form-container form {
+
+  width: 70%;
+}
+
+.input-full-width {
+  width: 100%;
+}
+
+.submit-button div {
+
+  width: 100%;
+  height: 100%;
+  display: table;
+  text-align: center;
+}
+
+.submit-button span {
+
+  display: table-cell;
+  vertical-align: middle;
+  font-family: Bahnschrift, serif;
+  font-size: 15px;
+  color: aliceblue;
+  user-select: none;
+}
+
+.expense-item {
+
+  width: 300px;
+  height: 250px;
+  margin: 20px;
+  display: flex;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  transition: 0.8s;
+  background-color: white;
+  caret-color: transparent;
+  border-radius: 10px;
+}
+
+
+.expense-item:hover .expense-item-bigger-side-container {
+  width: 80%;
+}
+
+.expense-item:hover .expense-item-smaller-side-container {
+  width: 20%;
+}
+
+.expense-item-bigger-side-container,
+.expense-item-smaller-side-container {
+  height: 100%;
+  position: relative;
+  transition: width 0.5s ease;
+}
+
+.expense-item-bigger-side-container {
+  width: 100%;
+}
+
+.expense-item-smaller-side-container {
+  width: 0;
+  background-color: rgba(227, 227, 227, 0.59);
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  overflow: hidden;
+}
+
+.expense-item-bigger-side-content {
+
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.expense-item-base-span {
+
+  width: 100%;
+  font-size: 18px;
+  color: #626262;
+  padding: 10px;
+  text-align: center;
+  font-family: Bahnschrift, serif;
+}
+
+.date-time-input-container {
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.date-time-input-container > label {
+  text-align: start;
+  font-size: 12px;
+  padding: 5px;
+  color: #0687FF;
+}
+
+input[type=datetime-local] {
+  width: 90%;
+  padding: 15px;
+  background-color: #ffffff;
+  margin-bottom: 15px;
+  font-size: 15px;
+  border-width: .5px;
+  border-radius: 5px;
+  border-color: #f2f2f2;
+}

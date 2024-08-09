@@ -1,0 +1,11 @@
+.when-toolbar-hidden {
+    margin-top: 0;
+}
+
+.when-toolbar-visible {
+    margin-top: 60px;
+}
+
+.menu-btn-selected {
+  color: #0687FF;
+}
